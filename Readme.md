@@ -9,14 +9,11 @@ Neo Postman là nền tảng làm việc nhóm cho việc xây dựng, kiểm th
 | Yêu cầu | Đặc tả yêu cầu phần mềm và danh mục Use Case | [SRS](docs/srs/SRS.md) |
 | Thiết kế | Mô tả thiết kế, liên kết tới sơ đồ | [Thiết kế](docs/design/README.md) |
 | Dữ liệu | Lộ trình migration, quy tắc đặt tên, lược đồ cơ sở dữ liệu | [CSDL](docs/db/README.md) |
-| Chuẩn kỹ thuật | Quy tắc coding, quy trình Git, checklist review | [Guidelines](docs/guidelines/README.md) |
 
 ## Hướng dẫn sử dụng
 - Bắt đầu với SRS để hiểu phạm vi sản phẩm, actor và yêu cầu.
 - Tra cứu đặc tả Use Case khi phân tích nghiệp vụ hoặc viết user story.
 - Tham chiếu tài liệu thiết kế và cơ sở dữ liệu trước khi hiện thực hoặc review.
-- Áp dụng các guideline và checklist trong quá trình phát triển và kiểm thử.
-- Đồng bộ hoạt động triển khai theo các kế hoạch DevOps được mô tả.
 
 ## Placeholder sơ đồ
 - Use Case Diagram: [docs/srs/use-case-diagram.png](docs/srs/use-case-diagram.png)

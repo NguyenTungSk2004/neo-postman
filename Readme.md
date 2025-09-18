@@ -1,9 +1,9 @@
-# 📑 Use Case Specification - Postman Clone
+# 📑 Neo-Postman
 
 ## 🔗 Sơ đồ tham chiếu
 
-- **Use Case Diagram**: ![Use Case Diagram](UseCase.png)
 - **Database ERD**: ![Database ERD](Database.png)
+- **Use Case Diagram**: ![Use Case Diagram](UseCase.png)
 ---
 
 ## UC-01: Đăng ký

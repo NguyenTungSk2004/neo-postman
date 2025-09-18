@@ -8,9 +8,9 @@ Tài liệu SRS mô tả mục tiêu kinh doanh, phạm vi chức năng và các
 Neo Postman là nền tảng SaaS hỗ trợ người dùng và nhóm làm việc tạo, gửi, kiểm thử và chia sẻ yêu cầu HTTP trong các workspace. Phạm vi tài liệu bao gồm ứng dụng web, API backend, dịch vụ nền và các thành phần hạ tầng liên quan.
 
 ### 1.3 Tài liệu tham chiếu
-- README tổng quan: ../README.md
-- Use Case Diagram (placeholder): [use-case-diagram.png](use-case-diagram.png)
-- Database ERD (placeholder): [database-erd.png](database-erd.png)
+- README tổng quan: [../../README.md](../../README.md)
+- Use Case Diagram: ![use-case-diagram.png](use-case-diagram.png)
+- Database ERD: ![database-erd.png](database-erd.png)
 
 ### 1.4 Thuật ngữ và viết tắt
 | Thuật ngữ | Định nghĩa |

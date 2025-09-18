@@ -3,7 +3,6 @@
 ## Danh mục
 | Artefact | Mô tả | Liên kết |
 | --- | --- | --- |
-| Kế hoạch Migration | Chu kỳ release và quy trình triển khai | [migrations.md](migrations.md) |
 | Quy tắc đặt tên | Quy ước đặt tên bảng, cột, khóa và index | [naming-conventions.md](naming-conventions.md) |
 | Mô hình thực thể | Mô tả entity và quan hệ trong Entity Framework Core | [entity-models.md](entity-models.md) |
 

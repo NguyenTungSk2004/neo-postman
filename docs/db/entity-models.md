@@ -41,7 +41,6 @@ Neo Postman sử dụng Entity Framework Core (code-first) với provider `Npgsq
 - Sử dụng `Database.Migrate()` khi khởi động ứng dụng để bảo đảm schema tương thích.
 
 ## Tham chiếu thêm
-- [Kế hoạch Migration](migrations.md)
 - [Quy tắc đặt tên](naming-conventions.md)
 - ERD: ![../srs/database-erd.png](../srs/database-erd.png)
 

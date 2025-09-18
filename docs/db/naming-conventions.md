@@ -39,7 +39,6 @@
 - Nếu dùng enum PostgreSQL: đặt tên `enum_{nghe_nghiep}` ví dụ `enum_workspace_role`.
 
 ## Migration script
-- Tên file theo chuẩn trong [migrations.md](migrations.md).
 - Trong script, comment rõ lý do thay đổi và tác động dữ liệu.
 
 

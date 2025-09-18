@@ -19,8 +19,8 @@ Neo Postman là nền tảng làm việc nhóm cho việc xây dựng, kiểm th
 - Đồng bộ hoạt động triển khai theo các kế hoạch DevOps được mô tả.
 
 ## Placeholder sơ đồ
-- Use Case Diagram: [docs/srs/use-case-diagram.png](srs/use-case-diagram.png)
-- Database ERD: [docs/srs/database-erd.png](srs/database-erd.png)
+- Use Case Diagram: [docs/srs/use-case-diagram.png](docs/srs/use-case-diagram.png)
+- Database ERD: [docs/srs/database-erd.png](docs/srs/database-erd.png)
 
 ## Lịch sử cập nhật
 | Ngày | Phiên bản | Ghi chú | Phụ trách |

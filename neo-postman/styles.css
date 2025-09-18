@@ -1,0 +1,104 @@
+:root{
+  --bg1:#0b1220; --bg2:#0f172a;
+  --panel:#0f1723; --panel-2:#0e1526; --border:#1f2a44;
+  --text:#e6ecff; --muted:#9fb0d0; --accent:#ff6d00; --accent-2:#06b6d4;
+  --ok:#22c55e; --warn:#f59e0b; --err:#ef4444;
+  --radius:12px; --gap:12px; --shadow:0 16px 42px rgba(3,8,23,.55);
+  --code:#0b1321;
+  --titlebar-h:40px; --statusbar-h:26px;
+  --sidebar-w:300px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--text);
+  font-family:Segoe UI,system-ui,-apple-system,Inter,Roboto,sans-serif;
+  background:
+    radial-gradient(120% 160% at 100% 0%, rgba(255,109,0,.10) 0%, transparent 55%),
+    radial-gradient(120% 160% at 0% 100%, rgba(6,182,212,.10) 0%, transparent 55%),
+    linear-gradient(140deg,var(--bg1),var(--bg2));
+}
+.app{display:grid;grid-template-rows:var(--titlebar-h) 1fr var(--statusbar-h);height:100vh}
+
+/* Titlebar */
+.titlebar{display:flex;align-items:center;gap:10px;padding:0 8px;border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));backdrop-filter:blur(10px) saturate(140%);-webkit-app-region:drag}
+.tb-left{display:flex;align-items:center;gap:10px}
+.appicon{width:18px;height:18px;border-radius:4px;-webkit-app-region:no-drag;background:conic-gradient(from 200deg,var(--accent),#ff9144,var(--accent));box-shadow:0 0 0 1px rgba(255,255,255,.05)}
+.winctrl{margin-left:auto;display:flex;-webkit-app-region:no-drag}
+.wc{width:46px;height:var(--titlebar-h);display:grid;place-items:center;border:none;background:transparent;color:#cbd5e1;cursor:pointer}
+.wc:hover{background:rgba(255,255,255,.06)} .wc:active{background:rgba(255,255,255,.12)}
+
+/* Layout */
+.body{display:grid;grid-template-columns:var(--sidebar-w) 6px 1fr;min-height:0}
+.sidebar{overflow:auto;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0));border-right:1px solid var(--border)}
+.resizer{cursor:col-resize;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.06))}
+.main{min-width:0;display:grid;grid-template-rows:auto auto auto 1fr}
+
+/* Mainbar */
+.mainbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
+.mainbar .title{font-weight:600;color:#dbe4ff}
+.btn-history{border-color:rgba(255,255,255,.14)}
+.btn-history .dot{width:6px;height:6px;border-radius:999px;background:var(--warn)}
+.ic{width:16px;height:16px}
+
+/* Builder/Response (giữ nguyên như bản đã gửi) */
+.builder{padding:12px;border-bottom:1px solid var(--border);backdrop-filter:blur(6px)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.select,.url,.btn-send{border-radius:12px;border:1px solid var(--border);background:var(--panel-2);color:var(--text)}
+.select select{appearance:none;background:transparent;color:inherit;border:none;outline:none;padding:10px 12px}
+.url{flex:1;display:flex;align-items:center;min-width:320px}
+.url input{flex:1;padding:10px 12px;background:transparent;border:none;outline:none;color:var(--text)}
+.btn-send{padding:10px 16px;background:linear-gradient(135deg,var(--accent),#ff9144);border:none;cursor:pointer;box-shadow:0 10px 26px rgba(255,109,0,.25)}
+
+.subtabs{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border)}
+.subtabs label{padding:8px 10px;border-radius:10px;border:1px solid var(--border);color:var(--muted);cursor:pointer;background:rgba(255,255,255,.03)}
+input[name=rtab]{display:none}
+#rtab1:checked ~ .subtabs .r1, #rtab2:checked ~ .subtabs .r2, #rtab3:checked ~ .subtabs .r3, #rtab4:checked ~ .subtabs .r4, #rtab5:checked ~ .subtabs .r5{color:#fff;border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
+.panes{position:relative;min-height:220px}
+.pane{position:absolute;inset:0;padding:12px;display:none}
+#rtab1:checked ~ .panes .params,
+#rtab2:checked ~ .panes .auth,
+#rtab3:checked ~ .panes .headers,
+#rtab4:checked ~ .panes .body,
+#rtab5:checked ~ .panes .scripts{display:block}
+
+.table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.table th,.table td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}
+.table thead th{background:rgba(255,255,255,.04)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+pre{margin:0;padding:16px;background:var(--code);border:1px solid #0f1a2f;border-radius:12px;color:#cdd8ff}
+
+.response{display:grid;grid-template-rows:auto auto 1fr;min-height:0;border-top:1px solid var(--border)}
+.res-head{display:flex;gap:10px;align-items:center;padding:10px 12px;flex-wrap:wrap}
+.chip{padding:4px 8px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:12px}
+.chip.ok{color:var(--ok);border-color:rgba(34,197,94,.35)}
+.rt{display:flex;gap:6px;padding:0 12px 10px;border-bottom:1px solid var(--border)}
+.rt label{padding:6px 10px;border:1px solid var(--border);border-radius:10px;color:var(--muted);cursor:pointer;background:rgba(255,255,255,.03)}
+input[name=vtab]{display:none}
+#v1:checked ~ .rt .v1, #v2:checked ~ .rt .v2, #v3:checked ~ .rt .v3{color:#fff;border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
+.viewer{position:relative;min-height:220px}
+.view{position:absolute;inset:0;padding:12px;display:none;overflow:auto}
+#v1:checked ~ .viewer .pretty, #v2:checked ~ .viewer .raw, #v3:checked ~ .viewer .preview{display:block}
+.preview-box{padding:10px;border:1px dashed var(--border);border-radius:12px}
+
+/* History in MAIN */
+.main[data-mode="history"] .builder,
+.main[data-mode="history"] .subtabs,
+.main[data-mode="history"] .panes,
+.main[data-mode="history"] .response{display:none}
+.history{display:none;grid-template-rows:auto 1fr;min-height:0}
+.main[data-mode="history"] .history{display:grid}
+.history-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--border)}
+.history-list{padding:12px;overflow:auto}
+.pill{padding:3px 8px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:12px}
+
+/* Statusbar */
+.statusbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 10px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);
+  background:linear-gradient(0deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+
+/* Scrollbar + A11y */
+::-webkit-scrollbar{height:12px;width:12px}
+::-webkit-scrollbar-thumb{background:#1b253d;border-radius:10px;border:2px solid #0d1426}
+::-webkit-scrollbar-track{background:transparent}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}

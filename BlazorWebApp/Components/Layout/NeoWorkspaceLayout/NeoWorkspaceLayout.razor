@@ -1,0 +1,21 @@
+@using BlazorWebApp.Components.Features.NeoPostman.Shared
+@using BlazorWebApp.Components.Features.NeoPostman.Sidebar
+@namespace BlazorWebApp.Components.Layout
+
+@inherits LayoutComponentBase
+
+<div class="neo-surface" role="application">
+    <div class="neo-app">
+        <NeoTitleBar />
+        <div class="neo-body">
+            <aside class="neo-sidebar-shell" aria-label="Workspace navigation">
+                <NeoSidebar />
+            </aside>
+            <div class="neo-resizer" role="separator" aria-orientation="vertical" aria-label="Resize sidebar" tabindex="0"></div>
+            <section class="neo-main-slot">
+                @Body
+            </section>
+        </div>
+        <NeoStatusBar />
+    </div>
+</div>

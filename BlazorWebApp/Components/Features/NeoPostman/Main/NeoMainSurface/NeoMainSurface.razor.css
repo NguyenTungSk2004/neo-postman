@@ -1,0 +1,15 @@
+.neo-main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: rgba(16, 24, 40, 0.55);
+}
+
+.neo-main[data-mode="history"] > :not(.neo-history-panel) {
+    display: none;
+}
+
+.neo-main[data-mode="history"] > .neo-history-panel {
+    display: grid;
+}

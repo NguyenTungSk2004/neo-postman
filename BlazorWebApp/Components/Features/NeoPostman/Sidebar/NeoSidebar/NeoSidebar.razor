@@ -1,0 +1,81 @@
+@namespace BlazorWebApp.Components.Features.NeoPostman.Sidebar
+
+<div class="neo-sidebar">
+    <div class="neo-sidebar-header">
+        <strong>Collections Manager</strong>
+        <div class="neo-dropdown" aria-label="Sidebar actions">
+            <button class="neo-btn neo-btn-accent" type="button">
+                <svg class="neo-ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 7l5 5-5 5-5-5z" /></svg>
+                Actions
+            </button>
+            <div class="neo-dropdown-menu" role="menu">
+                <button class="neo-menu-item has-sub" type="button">
+                    <span>New</span>
+                    <span class="neo-caret">›</span>
+                </button>
+                <div class="neo-dropdown-sub" role="menu">
+                    <button class="neo-menu-item" type="button">Request</button>
+                    <button class="neo-menu-item" type="button">Collection</button>
+                    <button class="neo-menu-item" type="button">Folder</button>
+                    <button class="neo-menu-item" type="button">Environment</button>
+                </div>
+                <div class="neo-menu-sep" role="separator"></div>
+                <button class="neo-menu-item" type="button">Collapse All</button>
+                <div class="neo-menu-sep" role="separator"></div>
+                <button class="neo-menu-item" type="button">Import</button>
+                <button class="neo-menu-item" type="button">Export</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="neo-sidebar-search">
+        <input placeholder="Tìm kiếm collections" aria-label="Tìm kiếm collections" />
+    </div>
+
+    <input type="radio" name="neo-sidebar-tab" id="neo-stab-collections" checked />
+    <input type="radio" name="neo-sidebar-tab" id="neo-stab-envs" />
+    <input type="radio" name="neo-sidebar-tab" id="neo-stab-auto" />
+    <div class="neo-sidebar-tabs" role="tablist" aria-label="Sidebar tabs">
+        <label for="neo-stab-collections" role="tab" aria-controls="neo-tab-collections">Collections</label>
+        <label for="neo-stab-envs" role="tab" aria-controls="neo-tab-envs">Environments</label>
+        <label for="neo-stab-auto" role="tab" aria-controls="neo-tab-auto">Auto Testing</label>
+    </div>
+
+    <div class="neo-tab-content" id="neo-tab-collections">
+        <section class="neo-collection" data-open="1">
+            <div class="neo-collection-head">
+                <button class="neo-toggle" type="button" title="Thu gọn" aria-label="Thu gọn Auth Service">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 10l4 4 4-4z" /></svg>
+                </button>
+                Auth Service
+            </div>
+            <div class="neo-collection-body">
+                <div class="neo-request"><span class="neo-method post">POST</span><span>/api/auth/login</span></div>
+                <div class="neo-request"><span class="neo-method get">GET</span><span>/api/auth/profile</span></div>
+                <div class="neo-request"><span class="neo-method del">DEL</span><span>/api/auth/logout</span></div>
+            </div>
+        </section>
+
+        <section class="neo-collection" data-open="1">
+            <div class="neo-collection-head">
+                <button class="neo-toggle" type="button" title="Thu gọn" aria-label="Thu gọn Products">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 10l4 4 4-4z" /></svg>
+                </button>
+                Products
+            </div>
+            <div class="neo-collection-body">
+                <div class="neo-request active"><span class="neo-method get">GET</span><span>/api/products</span></div>
+                <div class="neo-request"><span class="neo-method post">POST</span><span>/api/products</span></div>
+                <div class="neo-request"><span class="neo-method put">PUT</span><span>/api/products/:id</span></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="neo-tab-placeholder" id="neo-tab-envs">
+        <div class="neo-placeholder-card">Environments placeholder</div>
+    </div>
+
+    <div class="neo-tab-placeholder" id="neo-tab-auto">
+        <div class="neo-placeholder-card">Auto testing placeholder</div>
+    </div>
+</div>

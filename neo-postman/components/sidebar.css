@@ -1,0 +1,76 @@
+/* Sử dụng biến màu từ :root (styles.css) */
+
+.side-sticky{
+  position:sticky;top:0;
+  background:linear-gradient(180deg,rgba(13,19,38,.9),rgba(13,19,38,.75));
+  backdrop-filter:blur(6px);z-index:1;border-bottom:1px solid rgba(255,255,255,.04)
+}
+.side-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px}
+
+/* ===== Dropdown ===== */
+.dropdown{position:relative}
+.btn{
+  border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text);
+  border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:7px 10px;font-size:13px
+}
+.btn:hover{background:rgba(255,255,255,.06)}
+.btn:active{background:rgba(255,255,255,.12)}
+.btn-accent{background:linear-gradient(135deg,var(--accent),#ff9144);border:none;box-shadow:0 10px 26px rgba(255,109,0,.25)}
+.ic{width:16px;height:16px}
+
+/* Menu chính: căn sát trái nút, nở sang phải */
+.dropdown-menu{
+  position:absolute;top:38px;left:0; /* Căn trái nút */
+  min-width:180px;background:var(--panel-2);
+  border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 8px 22px rgba(0,0,0,.28);z-index:20;padding:6px;
+  display:none;
+}
+.dropdown-menu.open{display:block}
+
+.menu-item{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:9px 10px;border-radius:8px;border:1px solid transparent;
+  background:transparent;color:var(--text);cursor:pointer;font-size:13px
+}
+.menu-item:hover{background:rgba(255,255,255,.06);border-color:var(--border)}
+.menu-sep{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);margin:6px 4px}
+
+/* Submenu (tree) cho New: đổ sang phải */
+.has-sub .caret{opacity:.8}
+.dropdown-sub{
+  position:absolute;top:6px;left:100%;margin-left:6px; /* nở về bên phải */
+  min-width:180px;background:var(--panel-2);border:1px solid var(--border);border-radius:10px;
+  box-shadow:0 8px 22px rgba(0,0,0,.28);padding:6px;display:none;z-index:25;
+}
+.dropdown-sub.open{display:block}
+
+/* ===== Search ===== */
+.side-search{padding:8px 12px 12px}
+.side-search input{
+  width:100%;padding:9px 11px;border:1px solid var(--border);
+  border-radius:10px;background:var(--panel-2);color:var(--text);outline:none
+}
+
+/* ===== Tabs ===== */
+.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 12px 10px}
+.tabs label{display:block;text-align:center;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.03);cursor:pointer;color:var(--muted)}
+input[name=stab]{display:none}
+#stab1:checked ~ .tabs .t1, #stab2:checked ~ .tabs .t2, #stab3:checked ~ .tabs .t3{color:#fff;border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.08)}
+
+/* ===== Collections ===== */
+.side-list{padding:8px 10px 12px}
+.collection{border:1px solid var(--border);border-radius:12px;margin:10px 2px;overflow:hidden;background:rgba(255,255,255,.02);box-shadow:0 10px 26px rgba(2,6,23,.22)}
+.c-head{display:flex;align-items:center;gap:8px;padding:10px;background:rgba(255,255,255,.04);font-weight:700}
+.c-toggle{width:28px;height:28px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.03);display:grid;place-items:center;cursor:pointer}
+.c-toggle svg{width:16px;height:16px;transition:transform .2s ease}
+.collection[data-open="0"] .c-toggle svg{transform:rotate(-90deg)}
+.c-body{overflow:hidden;transition:max-height .22s ease}
+
+.req{display:flex;gap:8px;align-items:center;padding:9px 12px;border-top:1px solid var(--border);border-left:3px solid transparent}
+.req:hover{background:rgba(255,255,255,.04)}
+.req.active{background:rgba(255,255,255,.06);border-left-color:var(--accent)}
+.method{font-size:12px;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.06);border:1px solid var(--border)}
+.method.GET{color:#7ee787;border-color:rgba(126,231,135,.3)}
+.method.POST{color:#79c0ff;border-color:rgba(121,192,255,.3)}
+.method.PUT{color:#e3b341}.method.DEL{color:#ff7b72}

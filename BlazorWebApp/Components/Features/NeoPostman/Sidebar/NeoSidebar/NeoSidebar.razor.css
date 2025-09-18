@@ -1,0 +1,298 @@
+.neo-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 12px;
+    min-height: 100%;
+}
+
+.neo-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 10px;
+}
+
+.neo-dropdown {
+    position: relative;
+}
+
+.neo-btn {
+    border: 1px solid var(--neo-border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--neo-text);
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.neo-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.neo-btn:active {
+    transform: scale(0.97);
+}
+
+.neo-btn-accent {
+    background: linear-gradient(135deg, var(--neo-accent), #ff9144);
+    border: none;
+    box-shadow: 0 10px 26px rgba(255, 109, 0, 0.28);
+}
+
+.neo-ic {
+    width: 16px;
+    height: 16px;
+}
+
+.neo-dropdown-menu,
+.neo-dropdown-sub {
+    position: absolute;
+    left: 0;
+    top: 42px;
+    min-width: 190px;
+    background: var(--neo-panel-alt);
+    border: 1px solid var(--neo-border);
+    border-radius: 12px;
+    box-shadow: 0 10px 26px rgba(2, 6, 23, 0.22);
+    padding: 8px;
+    display: none;
+}
+
+.neo-dropdown-sub {
+    left: 100%;
+    margin-left: 8px;
+    top: 0;
+}
+
+.neo-dropdown:hover > .neo-dropdown-menu {
+    display: block;
+}
+
+.neo-dropdown-menu .has-sub:hover + .neo-dropdown-sub,
+.neo-dropdown-sub:hover {
+    display: block;
+}
+
+.neo-menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    border-radius: 9px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--neo-text);
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s ease, border 0.2s ease;
+}
+
+.neo-menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--neo-border);
+}
+
+.neo-menu-sep {
+    height: 1px;
+    margin: 6px 4px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+}
+
+.neo-sidebar-search {
+    padding: 4px 16px 12px;
+}
+
+.neo-sidebar-search input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--neo-border);
+    border-radius: 10px;
+    background: var(--neo-panel-alt);
+    color: var(--neo-text);
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.neo-sidebar-search input:focus {
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+}
+
+input[name="neo-sidebar-tab"] {
+    display: none;
+}
+
+.neo-sidebar-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 0 16px 10px;
+}
+
+.neo-sidebar-tabs label {
+    display: block;
+    text-align: center;
+    padding: 9px 12px;
+    border: 1px solid var(--neo-border);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    color: var(--neo-muted);
+    transition: background 0.2s ease, border 0.2s ease, transform 0.2s ease;
+}
+
+.neo-sidebar-tabs label:hover {
+    transform: translateY(-1px);
+}
+
+#neo-stab-collections:checked ~ .neo-sidebar-tabs label[for="neo-stab-collections"],
+#neo-stab-envs:checked ~ .neo-sidebar-tabs label[for="neo-stab-envs"],
+#neo-stab-auto:checked ~ .neo-sidebar-tabs label[for="neo-stab-auto"] {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.neo-tab-content,
+.neo-tab-placeholder {
+    display: none;
+    padding: 0 16px;
+}
+
+#neo-stab-collections:checked ~ #neo-tab-collections {
+    display: block;
+}
+
+#neo-stab-envs:checked ~ #neo-tab-envs,
+#neo-stab-auto:checked ~ #neo-tab-auto {
+    display: block;
+}
+
+.neo-placeholder-card {
+    margin-top: 16px;
+    border: 1px dashed var(--neo-border);
+    border-radius: 12px;
+    padding: 24px;
+    color: var(--neo-muted);
+    text-align: center;
+}
+
+.neo-collection {
+    border: 1px solid var(--neo-border);
+    border-radius: 12px;
+    margin: 12px 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.22);
+    transition: border 0.2s ease, background 0.2s ease;
+}
+
+.neo-collection-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.neo-toggle {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--neo-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.neo-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.neo-toggle svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.neo-collection[data-open="0"] .neo-toggle svg {
+    transform: rotate(-90deg);
+}
+
+.neo-collection-body {
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+}
+
+.neo-collection[data-open="0"] .neo-collection-body {
+    max-height: 0;
+}
+
+.neo-request {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 16px;
+    border-top: 1px solid var(--neo-border);
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: background 0.2s ease, border 0.2s ease;
+}
+
+.neo-request:first-child {
+    border-top: none;
+}
+
+.neo-request:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.neo-request.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-left-color: var(--neo-accent);
+}
+
+.neo-method {
+    font-size: 12px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--neo-border);
+    background: rgba(255, 255, 255, 0.05);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.neo-method.get {
+    color: #7ee787;
+    border-color: rgba(126, 231, 135, 0.3);
+}
+
+.neo-method.post {
+    color: #79c0ff;
+    border-color: rgba(121, 192, 255, 0.3);
+}
+
+.neo-method.put {
+    color: #e3b341;
+    border-color: rgba(227, 179, 65, 0.36);
+}
+
+.neo-method.del {
+    color: #ff7b72;
+    border-color: rgba(255, 123, 114, 0.36);
+}
+
+.neo-caret {
+    opacity: 0.85;
+    font-size: 12px;
+}

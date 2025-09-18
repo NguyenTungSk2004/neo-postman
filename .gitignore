@@ -1,0 +1,66 @@
+## Build artifacts
+**/bin/
+**/obj/
+**/out/
+**/*.dll
+**/*.exe
+**/*.pdb
+**/*.app
+**/*.so
+**/*.dylib
+appsettings.json
+# MSBuild cache
+*.assets.cache
+
+# NuGet restore files
+*.nuget.dgspec.json
+project.assets.json
+
+## User-specific files
+**/*.user
+**/*.userosscache
+**/*.suo
+*.sln.docstates
+*.csproj.user
+
+## Visual Studio
+.vs/
+.vscode/
+*.sln.iml
+
+## Rider
+.idea/
+
+## Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+## Logs
+*.log
+
+## Auto-generated files
+*.g.cs
+*.g.i.cs
+*.generated.cs
+
+## NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.fragment.lock.json
+
+## Secrets
+secrets.json
+
+## Coverage
+coverage/
+*.lcov
+*.html
+
+## Config dump
+appsettings.Development.json
+appsettings.*.json.local

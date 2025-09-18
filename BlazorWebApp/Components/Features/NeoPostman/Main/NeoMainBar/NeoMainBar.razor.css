@@ -1,0 +1,64 @@
+.neo-mainbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--neo-border);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.neo-mainbar-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    color: #dbe4ff;
+}
+
+.neo-mainbar select {
+    appearance: none;
+    background: var(--neo-panel-alt);
+    color: var(--neo-text);
+    border: 1px solid var(--neo-border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.neo-mainbar select:focus {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.18);
+    outline: none;
+}
+
+.neo-btn-history {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--neo-text);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.neo-btn-history:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.neo-btn-history:active {
+    transform: translateY(1px);
+}
+
+.neo-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--neo-warn);
+    display: inline-block;
+}

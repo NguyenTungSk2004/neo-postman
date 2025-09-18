@@ -1,0 +1,80 @@
+.neo-titlebar {
+    height: var(--neo-titlebar-h);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--neo-border);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(12px) saturate(160%);
+}
+
+.neo-titlebar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    color: #dbe4ff;
+    letter-spacing: 0.01em;
+}
+
+.neo-title {
+    white-space: nowrap;
+}
+
+.neo-appicon {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    background: conic-gradient(from 200deg, var(--neo-accent), #ff9144, var(--neo-accent));
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.neo-window-controls {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: border 0.2s ease;
+}
+
+.neo-window-controls:focus-within {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.neo-window-control {
+    width: 52px;
+    height: var(--neo-titlebar-h);
+    display: grid;
+    place-items: center;
+    background: transparent;
+    color: #cbd5e1;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.neo-window-control:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.neo-window-control:active {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.neo-window-control:focus-visible {
+    outline: 2px solid var(--neo-accent-alt);
+    outline-offset: -3px;
+}
+
+.neo-window-control.neo-close:hover {
+    background: rgba(239, 68, 68, 0.22);
+    color: #ffe4e6;
+}
+
+.neo-window-control.neo-close:active {
+    background: rgba(239, 68, 68, 0.35);
+}

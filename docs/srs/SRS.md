@@ -185,4 +185,4 @@ Neo Postman hoạt động như một hệ thống độc lập gồm ứng dụ
 | Environment | FR-E-01 – FR-E-04 | UC-10, UC-11 |
 
 ---
-[← Trang trước: README](../../README.md) | [Trang sau: UC-01 →](/docs/srs/use-case-specs/UC-01_SignUp.md)
+[← Trang trước: README](../../README.md)

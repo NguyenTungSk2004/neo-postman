@@ -25,6 +25,3 @@ Neo Postman là nền tảng cộng tác giúp nhóm xây dựng, kiểm thử v
 | --- | --- | --- | --- |
 | 2025-09-18 | 0.1.0 | Khởi tạo bộ tài liệu Neo Postman | Nhóm BA/SA |
 | 2025-09-21 | 0.2.0 | Chuẩn hóa Use Case, Entity Model, quy ước đặt tên | Nhóm BA/SA |
-
----
-[← Trang trước: Quy ước đặt tên Entity](docs/srs/naming-conventions.md) | [Trang sau: SRS →](docs/srs/SRS.md)

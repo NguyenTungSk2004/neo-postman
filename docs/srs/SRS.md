@@ -111,7 +111,7 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 
 ## 4. Truy vết Use Case
 | ID | Tên | Actor chính | Mục tiêu | Liên kết |
-| --- | --- | --- | --- | --- |
+| ------ | --- | --- | --- | --- |
 | UC-01 | Đăng ký | Khách | Tạo tài khoản, sinh token xác minh. | [UC-01_SignUp](use-case-specs/UC-01_SignUp.md) |
 | UC-02 | Đăng nhập | Thành viên | Xác thực, tạo `UserSessions`. | [UC-02_Login](use-case-specs/UC-02_Login.md) |
 | UC-03 | Cập nhật hồ sơ | Thành viên | Đổi tên, avatar, email. | [UC-03_UpdateProfile](use-case-specs/UC-03_UpdateProfile.md) |

@@ -1,27 +1,43 @@
-# UC-06 Quản lý folder
+# UC-06 Quản lý Folder
 
-- **Actor**: Thành viên xác thực
-- **Mục đích**: Sắp xếp request thông qua folder trong collection.
+- **Actor**: Thành viên có quyền ghi trên collection
+- **Mục đích**: Tổ chức request bằng cây folder trong một collection.
 
 ## Điều kiện tiên quyết
-- Người dùng có quyền truy cập collection.
-- Collection tồn tại.
+- Collection tồn tại trong workspace và actor là thành viên được phép ghi.
+
+## Kích hoạt
+- Actor thao tác trên giao diện cây collection (tạo, đổi tên, di chuyển, xóa folder).
 
 ## Luồng chính
-1. Người dùng thêm, đổi tên, di chuyển hoặc xóa folder.
-2. Hệ thống kiểm tra cấu trúc cây không tạo vòng lặp.
-3. Hệ thống ghi nhận thay đổi vào `Folders`.
-4. Hệ thống trả cây folder mới cho client.
+### Tạo folder
+1. Actor chọn `New Folder`, nhập `Name` và chọn `ParentId` (nullable) thuộc cùng collection.
+2. Hệ thống xác minh quyền và đảm bảo `ParentId` (nếu có) liên kết đến `Folders.Id` cùng `CollectionId`.
+3. Hệ thống tạo bản ghi `Folders` với `CollectionId`, `ParentId`, `CreatedAt`, `UpdatedAt`.
 
-## Luồng thay thế
-- **A1: Di chuyển tạo vòng lặp**
-  - Hệ thống từ chối và giữ trạng thái cũ.
-- **A2: Xóa folder chứa request**
-  - Hệ thống yêu cầu xác nhận trước khi cascade xóa.
+### Cập nhật hoặc di chuyển folder
+1. Actor đổi `Name` hoặc chọn lại `ParentId`.
+2. Hệ thống đảm bảo không tạo vòng lặp (Parent không là chính nó hoặc con của nó).
+3. Hệ thống cập nhật bản ghi `Folders`, bao gồm `UpdatedAt`.
+
+### Xóa folder
+1. Actor chọn `Delete` và xác nhận.
+2. Hệ thống xóa folder, các folder con và toàn bộ `Requests` nằm trong cây đó; các bản ghi `RequestParams`, `RequestHeaders`, `RequestTests`, `RequestHistory` liên quan cũng được xóa.
+
+## Luồng thay thế / lỗi
+- **A1: Thiếu tên**: Hệ thống yêu cầu nhập `Name` hợp lệ.
+- **A2: Vòng lặp cây**: Hệ thống từ chối nếu `ParentId` tạo quan hệ không hợp lệ.
+- **A3: Không đủ quyền**: Hệ thống từ chối thao tác.
 
 ## Hậu điều kiện
-- Cấu trúc folder cập nhật theo yêu cầu người dùng.
+- Cấu trúc `Folders` và `Requests` trong collection được cập nhật đúng với thao tác.
 
 ## Bảng dữ liệu liên quan
 - `Folders`
 - `Requests`
+- `RequestParams`
+- `RequestHeaders`
+- `RequestTests`
+- `RequestHistory`
+---
+[← Trang trước: UC-05 Quản lý Collection](UC-05_ManageCollections.md) | [Trang sau: UC-07 Quản lý Request →](UC-07_ManageRequests.md)

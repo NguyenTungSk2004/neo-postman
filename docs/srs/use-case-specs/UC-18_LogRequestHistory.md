@@ -9,9 +9,9 @@
 
 ## Luồng chính
 1. Engine nhận kết quả từ thao tác gửi request.
-2. Hệ thống tổng hợp thông tin (request id, status code, thời gian phản hồi, kích thước).
-3. Hệ thống insert bản ghi vào `RequestHistory`.
-4. Hệ thống phát sự kiện (event) để cập nhật UI real-time (nếu có).
+2. Hệ thống tổng hợp thông tin (`RequestId`, `ResponseCode`, `ResponseTime`, `ResponseBody`).
+3. Hệ thống insert bản ghi vào `RequestHistory` với `ExecutedAt` là thời điểm hoàn tất.
+4. Hệ thống phát sự kiện nội bộ để cập nhật UI thời gian thực (nếu có cơ chế push).
 
 ## Luồng thay thế
 - **A1: Ghi log thất bại**
@@ -23,4 +23,5 @@
 ## Bảng dữ liệu liên quan
 - `RequestHistory`
 - `Requests`
-- `EventLogs` (nếu sử dụng)
+---
+[← Trang trước: UC-17 Chuyển quyền Owner](UC-17_TransferOwnership.md) | [Trang sau: Mô hình thực thể →](../entity-models.md)

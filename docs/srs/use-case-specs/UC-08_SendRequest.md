@@ -1,32 +1,36 @@
 # UC-08 Gửi request
 
-- **Actor**: Thành viên xác thực
-- **Mục đích**: Thực thi request và xem phản hồi trả về.
+- **Actor**: Thành viên đã xác thực có quyền truy cập request
+- **Mục đích**: Thực thi request và lưu kết quả vào lịch sử.
 
 ## Điều kiện tiên quyết
-- Request đã được cấu hình hợp lệ.
-- Người dùng có quyền truy cập request.
+- Bản ghi `Requests` tồn tại và được cấu hình hợp lệ.
+- Nếu sử dụng environment, `Environments.WorkspaceId` trùng với workspace của request và tồn tại các `EnvironmentVariables` cần thiết.
 
 ## Luồng chính
-1. Người dùng chọn request và nhấn **Send**.
-2. Hệ thống tải environment và thay thế biến từ `EnvironmentVariables` (nếu chọn).
-3. Engine thực hiện HTTP call ra ngoài.
-4. Hệ thống nhận phản hồi, đo thời gian, ghi log.
-5. Hệ thống lưu bản ghi vào `RequestHistory` và hiển thị response cho người dùng.
+1. Actor chọn request và (nếu cần) chọn environment, hệ thống nạp các `EnvironmentVariables` có `IsActive = true` làm giá trị thay thế.
+2. Hệ thống áp dụng params và headers tương ứng: chỉ bao gồm `RequestHeaders` có `IsActive = true` và kết hợp `RequestParams` vào URL hoặc query string theo `Type`.
+3. Engine thực thi HTTP call theo cấu hình `Method`, `Url`, `Body`, `Auth` (json, TODO: chuẩn hóa cấu trúc credentials).
+4. Hệ thống ghi nhận kết quả (mã phản hồi, thời gian, body) và tạo bản ghi `RequestHistory` với `RequestId`, `ResponseCode`, `ResponseTime`, `ResponseBody` (nullable), `ExecutedAt`.
+5. Hệ thống trả về response cho client và cập nhật UI (lịch sử, console, v.v.).
 
-## Luồng thay thế
-- **A1: Thiếu biến**
-  - Hệ thống phát hiện biến chưa định nghĩa và thông báo lỗi.
-- **A2: Timeout**
-  - Hệ thống dừng request, trả thông báo timeout và đề xuất thử lại.
-- **A3: SSL/TLS lỗi**
-  - Hệ thống cảnh báo lỗi chứng chỉ và cho phép bỏ qua (nếu chính sách cho phép).
+## Luồng thay thế / lỗi
+- **A1: Biến thiếu giá trị**
+  - Hệ thống thông báo trước khi gửi nếu phát hiện placeholder không thể thay thế.
+- **A2: Gọi thất bại (timeout, kết nối, SSL, …)**
+  - Hệ thống vẫn ghi `RequestHistory` với thông tin lỗi phù hợp và thông báo người dùng.
 
 ## Hậu điều kiện
-- Lịch sử request có thêm bản ghi mới.
-- Người dùng nhìn thấy response và thông tin meta (status, thời gian, kích thước).
+- Lịch sử thực thi request được bổ sung bản ghi mới trong `RequestHistory`.
+- Client có thể tiếp tục phân tích response vừa nhận.
 
 ## Bảng dữ liệu liên quan
 - `Requests`
-- `EnvironmentVariables`
+- `RequestHeaders`
+- `RequestParams`
+- `RequestTests`
 - `RequestHistory`
+- `Environments`
+- `EnvironmentVariables`
+---
+[← Trang trước: UC-07 Quản lý Request](UC-07_ManageRequests.md) | [Trang sau: UC-09 Xem lịch sử request →](UC-09_ViewRequestHistory.md)

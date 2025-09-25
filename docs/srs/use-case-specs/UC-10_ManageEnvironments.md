@@ -1,25 +1,28 @@
 # UC-10 Quản lý environment
 
-- **Actor**: Thành viên xác thực
-- **Mục đích**: Tạo, chỉnh sửa, xóa environment phục vụ request.
+- **Actor**: Thành viên có quyền cấu hình workspace (Member trở lên)
+- **Mục đích**: Tạo, cập nhật, nhân bản, xóa environment thuộc một workspace.
 
 ## Điều kiện tiên quyết
-- Người dùng là thành viên của workspace.
+- Actor thuộc `WorkspaceMembers` của workspace và được cấp quyền ghi (TODO: mapping Role -> quyền).
 
 ## Luồng chính
-1. Người dùng mở danh sách environment và chọn thao tác (tạo/sửa/clone/xóa).
-2. Hệ thống kiểm tra quyền và ràng buộc tên trùng.
-3. Hệ thống cập nhật bảng `Environments`.
-4. Hệ thống trả danh sách environment mới nhất.
+1. Actor mở danh sách environment của workspace và chọn thao tác (create/update/duplicate/delete).
+2. Hệ thống đảm bảo mọi bản ghi `Environments` luôn gắn với `WorkspaceId` hiện tại.
+3. Khi tạo mới: hệ thống ghi `Name`, `WorkspaceId`, `CreatedAt`, `UpdatedAt` vào `Environments`.
+4. Khi cập nhật: hệ thống kiểm tra tên không để trống, cập nhật trường thay đổi và `UpdatedAt`.
+5. Khi nhân bản: hệ thống tạo bản ghi `Environments` mới và sao chép các `EnvironmentVariables` (chỉ những bản ghi có `IsActive = true` nếu chính sách yêu cầu).
+6. Khi xóa: hệ thống xóa `Environments` và cascade toàn bộ `EnvironmentVariables` thuộc environment đó.
 
-## Luồng thay thế
-- **A1: Tên environment trùng**
-  - Hệ thống thông báo lỗi và yêu cầu đổi tên.
-- **A2: Environment đang được scheduler sử dụng**
-  - Hệ thống cảnh báo và không cho phép xóa (tuỳ tính năng tương lai).
+## Luồng thay thế / lỗi
+- **A1: Tên để trống hoặc trùng lặp**: Hệ thống từ chối lưu và thông báo người dùng (TODO: xem xét unique index trên `WorkspaceId`, `Name`).
+- **A2: Không đủ quyền**: Hệ thống không cho phép thao tác.
 
 ## Hậu điều kiện
-- Danh sách environment phản ánh thay đổi vừa thực hiện.
+- Bảng `Environments` phản ánh chính xác danh sách environment của workspace.
 
 ## Bảng dữ liệu liên quan
 - `Environments`
+- `EnvironmentVariables`
+---
+[← Trang trước: UC-09 Xem lịch sử request](UC-09_ViewRequestHistory.md) | [Trang sau: UC-11 Quản lý biến environment →](UC-11_ManageEnvironmentVariables.md)

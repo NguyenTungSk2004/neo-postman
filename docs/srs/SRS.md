@@ -5,13 +5,11 @@
 Tài liệu SRS mô tả mục tiêu kinh doanh, phạm vi chức năng và các yêu cầu phi chức năng của Neo Postman. Đây là nguồn tham chiếu chính cho đội sản phẩm, phát triển, QA và vận hành.
 
 ### 1.2 Phạm vi
-Neo Postman là nền tảng SaaS giúp cá nhân và nhóm tạo, gửi, kiểm thử và chia sẻ request HTTP trong các workspace. Phạm vi bao gồm ứng dụng web, API backend, dịch vụ nền và các thành phần hạ tầng hỗ trợ.
+Neo Postman là nền tảng SaaS giúp cá nhân và nhóm tạo, gửi, kiểm thử và chia sẻ request HTTP trong các workspace. Phạm vi bao gồm ứng dụng web, logic nghiệp vụ backend, dịch vụ nền và các thành phần hạ tầng hỗ trợ.
 
 ### 1.3 Tài liệu tham chiếu
-- README tổng quan: [../../README.md](../../README.md)
-- Use Case Diagram:  ![Use Case Diagram](../imgs/use-case-diagram.png) 
+- README tổng quan: [README.md](../../README.md)
 - Mô hình thực thể: [entity-models.md](entity-models.md)
-- Thay đổi Use Case ↔ dữ liệu: [UseCaseChanges.md](UseCaseChanges.md)
 
 ### 1.4 Thuật ngữ và viết tắt
 | Thuật ngữ | Định nghĩa |
@@ -26,7 +24,7 @@ Neo Postman là nền tảng SaaS giúp cá nhân và nhóm tạo, gửi, kiểm
 
 ## 2. Mô tả tổng thể
 ### 2.1 Bối cảnh hệ thống
-Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-end và API backend RESTful. Hệ thống tích hợp dịch vụ email để gửi lời mời/xác minh và có thể kết nối các công cụ giám sát khi vận hành.
+Neo Postman hoạt động như một hệ thống độc lập gồm ứng dụng web Blazor. Hệ thống tích hợp dịch vụ email để gửi lời mời/xác minh và có thể kết nối các công cụ giám sát khi vận hành.
 
 ### 2.2 Chức năng chính
 - Đăng ký, xác minh email, đăng nhập và quản lý phiên người dùng (refresh token, thiết bị).
@@ -47,7 +45,7 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 
 ### 2.4 Môi trường vận hành
 - Front-end: SPA hỗ trợ Chrome, Edge, Firefox, Safari (hai phiên bản gần nhất).
-- Backend: .NET 8 API chạy dạng container.
+- Backend: Ứng dụng monolith .NET 9 chạy dạng container.
 - CSDL: PostgreSQL 15+ (ưu tiên) hoặc SQL Server 2019+.
 - Hạ tầng: Kubernetes/Azure App Service, hỗ trợ auto scaling.
 
@@ -109,9 +107,12 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 | FR-R-03 | Cho phép lọc/tra cứu lịch sử theo request, status code, khoảng thời gian. |
 | FR-R-04 | Cho phép tải xuống lịch sử gần nhất ở định dạng CSV (<= 30 ngày). |
 
+### 3.6 Sơ đồ Use Case  
+![Use Case Diagram](../imgs/use-case-diagram.png) 
+
 ## 4. Truy vết Use Case
 | ID | Tên | Actor chính | Mục tiêu | Liên kết |
-| ------ | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | UC-01 | Đăng ký | Khách | Tạo tài khoản, sinh token xác minh. | [UC-01_SignUp](use-case-specs/UC-01_SignUp.md) |
 | UC-02 | Đăng nhập | Thành viên | Xác thực, tạo `UserSessions`. | [UC-02_Login](use-case-specs/UC-02_Login.md) |
 | UC-03 | Cập nhật hồ sơ | Thành viên | Đổi tên, avatar, email. | [UC-03_UpdateProfile](use-case-specs/UC-03_UpdateProfile.md) |
@@ -133,7 +134,7 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 
 ## 5. Yêu cầu phi chức năng
 ### 5.1 Hiệu năng
-- NFR-P-01: API cốt lõi đáp ứng < 500 ms cho 95% request ở tải 500 người dùng đồng thời.
+- NFR-P-01: Ứng dụng đáp ứng < 500 ms cho 95% request ở tải 500 người dùng đồng thời.
 - NFR-P-02: Engine gửi request outbound trong vòng 200 ms sau thao tác người dùng.
 - NFR-P-03: Phân trang giới hạn 100 bản ghi mỗi trang.
 
@@ -149,8 +150,8 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 - NFR-A-03: RPO 30 phút, RTO 2 giờ.
 
 ### 5.4 Bảo trì và mở rộng
-- NFR-M-01: Codebase tuân thủ kiến trúc nhiều tầng (API, Application, Domain, Infrastructure).
-- NFR-M-02: Node API phải stateless để scale ngang.
+- NFR-M-01: Codebase tuân thủ kiến trúc nhiều tầng (BlazorWebApp, Application, Domain, Infrastructure).
+- NFR-M-02: Ứng dụng phải stateless để scale ngang.
 - NFR-M-03: Tính năng thử nghiệm bật/tắt qua feature flag.
 
 ### 5.5 Tuân thủ
@@ -164,11 +165,6 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 - Request builder có tab Params, Headers, Body, Tests.
 - Response viewer hỗ trợ raw, preview, cây JSON.
 
-### 6.2 Giao diện API
-- Endpoint REST chuẩn JSON dưới `/api/v1`.
-- Xác thực bằng bearer token OAuth 2.0.
-- Trả header rate limit: `X-Rate-Limit-Remaining`, `Retry-After`.
-
 ### 6.3 Giao diện dữ liệu
 - Tích hợp SMTP hoặc dịch vụ email transactional cho lời mời/xác minh.
 - Hỗ trợ webhook thông báo kết quả request (định hướng tương lai).
@@ -179,16 +175,7 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 - Chi tiết thực thể, quan hệ và index: [entity-models.md](entity-models.md).
 - Tham khảo [UseCaseChanges.md](UseCaseChanges.md) để đồng bộ logic nghiệp vụ ↔ dữ liệu.
 
-## 8. Báo cáo và phân tích
-- Cung cấp thống kê số lượng request theo status code ở cấp workspace (kế hoạch tương lai).
-- Cho phép export lịch sử request dạng CSV trong 30 ngày gần nhất.
-
-## 9. Tiêu chí nghiệm thu
-- Mỗi yêu cầu chức năng được map với test case và pass QA.
-- Không còn defect mức nghiêm trọng (sev 1/2) trước khi release Production.
-- Pipeline triển khai phải có bước test unit, integration và E2E tự động.
-
-## 10. Ma trận truy vết
+## 9. Ma trận truy vết
 | Module | Yêu cầu chính | Use Case |
 | --- | --- | --- |
 | Authentication | FR-A-01 – FR-A-06 | UC-01, UC-02 |
@@ -198,8 +185,5 @@ Neo Postman hoạt động như một hệ thống độc lập gồm SPA front-
 | Thực thi | FR-R-01 – FR-R-04 | UC-08, UC-09, UC-18 |
 | Environment | FR-E-01 – FR-E-04 | UC-10, UC-11 |
 
-## 11. Vấn đề mở
-- Hỗ trợ GraphQL và WebSocket đang nằm ngoài phạm vi, sẽ đánh giá ở giai đoạn tiếp theo.
-- API quản lý workspace dành cho automation đang được cân nhắc.
 ---
 [← Trang trước: README](../../README.md) | [Trang sau: UseCaseChanges →](UseCaseChanges.md)

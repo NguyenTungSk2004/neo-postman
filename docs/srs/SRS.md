@@ -173,7 +173,6 @@ Neo Postman hoạt động như một hệ thống độc lập gồm ứng dụ
 - Các bảng chính: `Users`, `UserSessions`, `UserVerificationTokens`, `UserAuthProviders`, `Workspaces`, `WorkspaceMembers`, `WorkspaceInvites`, `Environments`, `EnvironmentVariables`, `Collections`, `Folders`, `Requests`, `RequestParams`, `RequestHeaders`, `RequestTests`, `RequestHistory`.
 - Trường nhạy cảm (mật khẩu, secret) phải được băm hoặc mã hóa; refresh token chỉ lưu dạng hash.
 - Chi tiết thực thể, quan hệ và index: [entity-models.md](entity-models.md).
-- Tham khảo [UseCaseChanges.md](UseCaseChanges.md) để đồng bộ logic nghiệp vụ ↔ dữ liệu.
 
 ## 9. Ma trận truy vết
 | Module | Yêu cầu chính | Use Case |
@@ -186,4 +185,4 @@ Neo Postman hoạt động như một hệ thống độc lập gồm ứng dụ
 | Environment | FR-E-01 – FR-E-04 | UC-10, UC-11 |
 
 ---
-[← Trang trước: README](../../README.md) | [Trang sau: UseCaseChanges →](UseCaseChanges.md)
+[← Trang trước: README](../../README.md) | [Trang sau: UC-01 →](/docs/srs/use-case-specs/UC-01_SignUp.md)

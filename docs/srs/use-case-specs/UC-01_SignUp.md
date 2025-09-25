@@ -36,4 +36,4 @@
 - `UserAuthProviders`
 - `UserVerificationTokens`
 ---
-[← Trang trước: UseCaseChanges](../UseCaseChanges.md) | [Trang sau: UC-02 Đăng nhập →](UC-02_Login.md)
+[← Trang trước: Tài liệu SRS](../SRS.md) | [Trang sau: UC-02 Đăng nhập →](UC-02_Login.md)

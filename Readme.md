@@ -12,7 +12,6 @@ Neo Postman là nền tảng cộng tác giúp nhóm xây dựng, kiểm thử v
 
 ## Hướng dẫn sử dụng
 - Bắt đầu với SRS để nắm phạm vi, actor và yêu cầu.
-- Tra cứu UseCaseChanges khi cần đối chiếu yêu cầu với schema.
 - Xem từng Use Case để hiểu luồng nghiệp vụ chi tiết.
 - Tham chiếu Entity Model và Naming Conventions trước khi thiết kế migration hoặc cập nhật domain model.
 

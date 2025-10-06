@@ -1,9 +1,9 @@
 using SharedKernel.Exceptions;
-using SharedKernel.Interfaces;
-using SharedKernel.Specifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel.Base;
+using Domain.SeedWork;
+using Domain.Specifications;
+using SharedKernel.SeedWork;
 
 namespace Application.UseCases.BaseAuditable.HardDelete
 {

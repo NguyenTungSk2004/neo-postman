@@ -1,8 +1,8 @@
 using Ardalis.Specification;
-using SharedKernel.Base;
-using SharedKernel.Interfaces;
+using Domain.SeedWork;
+using SharedKernel.SeedWork;
 
-namespace SharedKernel.Specifications
+namespace Domain.Specifications
 {
     public class EntitiesByIdsSpecification<TEntity> : Specification<TEntity>
         where TEntity : Entity, IAggregateRoot, ISoftDeletable

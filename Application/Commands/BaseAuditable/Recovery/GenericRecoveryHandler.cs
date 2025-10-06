@@ -1,7 +1,7 @@
-using SharedKernel.Base;
 using SharedKernel.Exceptions;
-using SharedKernel.Interfaces;
 using MediatR;
+using Domain.SeedWork;
+using SharedKernel.SeedWork;
 
 namespace Application.UseCases.BaseAuditable.Recovery
 {

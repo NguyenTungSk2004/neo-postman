@@ -1,4 +1,4 @@
-namespace SharedKernel.Interfaces;
+namespace Domain.SeedWork;
 
 public interface IAggregateRoot
 { 

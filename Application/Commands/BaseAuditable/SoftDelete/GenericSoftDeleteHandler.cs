@@ -1,8 +1,8 @@
-using SharedKernel.Interfaces;
-using SharedKernel.Specifications;
 using MediatR;
-using SharedKernel.Base;
 using SharedKernel.Exceptions;
+using Domain.SeedWork;
+using Domain.Specifications;
+using SharedKernel.SeedWork;
 
 namespace Application.UseCases.BaseAuditable.SoftDelete
 {

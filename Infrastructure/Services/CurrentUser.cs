@@ -1,5 +1,5 @@
-using SharedKernel.Interfaces;
 using System.Security.Claims;
+using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace Infrastructure.Services;

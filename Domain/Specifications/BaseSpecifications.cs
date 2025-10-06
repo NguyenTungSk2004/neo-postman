@@ -1,6 +1,5 @@
 using Ardalis.Specification;
 using Domain.SeedWork;
-using SharedKernel.SeedWork;
 
 namespace Domain.Specifications
 {

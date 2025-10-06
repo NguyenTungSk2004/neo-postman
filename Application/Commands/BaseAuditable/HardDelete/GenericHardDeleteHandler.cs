@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Domain.SeedWork;
 using Domain.Specifications;
 
@@ -31,17 +30,6 @@ namespace Application.UseCases.BaseAuditable.HardDelete
 
                 await _repository.DeleteRangeAsync(toDelete, cancellationToken);
                 return true;
-            }
-            catch (DbUpdateException ex)
-            {
-                string errorMessage = ex.InnerException?.Message ?? ex.Message;
-
-                if (errorMessage.Contains("REFERENCE constraint", StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ApplicationException($"Không thể xóa vì thông tin bản ghi đang được sử dụng.");
-                }
-
-                throw new ApplicationException($"Đã xảy ra lỗi khi xóa.");
             }
             catch (UnauthorizedAccessException ex)
             {

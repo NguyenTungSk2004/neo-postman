@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.Persistence;
-using SharedKernel.Interfaces;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Domain.SeedWork;
+using Application.Common.Interfaces;
 
 namespace Infrastructure.DI
 {
@@ -11,7 +12,7 @@ namespace Infrastructure.DI
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite("Data Source=app.db")); // hoặc UseNpgsql, UseSqlite...
+                options.UseSqlServer("Server=.;Database=neo-postman;Trusted_Connection=True;TrustServerCertificate=True;"));
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<ICurrentUser, CurrentUser>();

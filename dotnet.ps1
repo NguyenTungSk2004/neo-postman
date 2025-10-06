@@ -14,5 +14,4 @@ dotnet sln add "BlazorWebApp/BlazorWebApp.csproj"
 dotnet sln add "Application/Application.csproj"
 dotnet sln add "Domain/Domain.csproj"
 dotnet sln add "Infrastructure/Infrastructure.csproj"
-dotnet sln add "SharedKernel/SharedKernel.csproj"
 

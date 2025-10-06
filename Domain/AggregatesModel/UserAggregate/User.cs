@@ -1,5 +1,6 @@
 using Domain.SeedWork;
-using SharedKernel.SeedWork;
+using Domain.Common.Extensions;
+using Domain.Common.Exceptions;
 
 namespace Domain.AggregatesModel.UserAggregate
 {
@@ -8,25 +9,38 @@ namespace Domain.AggregatesModel.UserAggregate
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string UrlAvatar { get; private set; }
-        public DateTime EmailVerifiedAt { get; private set; }
+        public DateTimeOffset? EmailVerifiedAt { get; private set; }
         public bool IsDisabled { get; private set; }
 
         public DateTimeOffset? CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
 
-        public User(string name, string email, string urlAvatar)
+        private List<UserAuthProvider> _userAuthProviders = new();
+        public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
+
+        public User(string name, string email, string? urlAvatar)
         {
             Name = name;
             Email = email;
-            UrlAvatar = urlAvatar;
+            UrlAvatar = urlAvatar ?? string.Empty;
+            IsDisabled = false;
+            EmailVerifiedAt = null;
             this.MarkCreated();
         }
-        public void Update(string name, string email, string urlAvatar)
+        public void Update(string name, string email, string? urlAvatar)
         {
             Name = name;
             Email = email;
-            UrlAvatar = urlAvatar;
+            UrlAvatar = urlAvatar ?? string.Empty;
             this.MarkUpdated();
+        }
+        public void Disabled() => IsDisabled = true;
+        public void Enabled() => IsDisabled = false;
+        public void MarkEmailAsVerified()
+        {
+            if (EmailVerifiedAt != null)
+                throw new DomainException($"Email {Email} has been verified.");
+            EmailVerifiedAt = DateTimeOffset.UtcNow;
         }
     }
 }

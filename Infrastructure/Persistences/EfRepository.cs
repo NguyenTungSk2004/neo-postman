@@ -1,8 +1,6 @@
 namespace Infrastructure.Persistence;
-
 using Ardalis.Specification.EntityFrameworkCore;
-using SharedKernel.Base;
-using SharedKernel.Interfaces;
+using Domain.SeedWork;
 
 public class EfRepository<T> : RepositoryBase<T>, IRepository<T> where T : class, IAggregateRoot
 {

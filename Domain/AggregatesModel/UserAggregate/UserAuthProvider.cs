@@ -23,7 +23,9 @@ namespace Domain.AggregatesModel.UserAggregate
         public void SetPassword(string passwordHash, string passwordSalt)
         {
             if (Provider != AuthProvider.Local)
-                throw new DomainException("Cannot set password for non-local provider.");
+                throw new DomainException("Password can only be set for local auth provider.");
+            if (string.IsNullOrWhiteSpace(passwordHash) || string.IsNullOrWhiteSpace(passwordSalt))
+                throw new DomainException("Password hash and salt must be provided for local auth provider.");
             PasswordHash = passwordHash;
             PasswordSalt = passwordSalt;
             this.MarkUpdated();

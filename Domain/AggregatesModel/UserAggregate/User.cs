@@ -15,21 +15,34 @@ namespace Domain.AggregatesModel.UserAggregate
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 
-        private List<UserAuthProvider> _userAuthProviders = new();
+        private List<UserAuthProvider> _userAuthProviders;
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
 
         public User(string name, string email, string? urlAvatar)
         {
+            UserValidator.EnsureValid(name, email, urlAvatar);
+
+            _userAuthProviders = new List<UserAuthProvider>();
+
             Name = name;
             Email = email;
             UrlAvatar = urlAvatar ?? string.Empty;
             IsDisabled = false;
             EmailVerifiedAt = null;
+
             this.MarkCreated();
             this.MarkUpdated();
         }
+        public static User CreateLocal(string name, string email, string passwordHash, string passwordSalt)
+        {
+            var user = new User(name, email, null);
+            user.AddAuthProvider(AuthProvider.Local, passwordHash, passwordSalt);
+            return user;
+        }
         public void Update(string name, string email, string? urlAvatar)
         {
+            UserValidator.EnsureValid(name, email, urlAvatar);
+
             Name = name;
             Email = email;
             UrlAvatar = urlAvatar ?? string.Empty;
@@ -42,6 +55,19 @@ namespace Domain.AggregatesModel.UserAggregate
             if (EmailVerifiedAt != null)
                 throw new DomainException($"Email {Email} has been verified.");
             EmailVerifiedAt = DateTimeOffset.UtcNow;
+        }
+        public void AddAuthProvider(AuthProvider provider, string? passwordHash = null, string? passwordSalt = null)
+        {
+            if (_userAuthProviders.Any(x => x.Provider == provider))
+                throw new DomainException($"Auth provider {provider} already exists for user {Email}.");
+
+            var userAuthProvider = new UserAuthProvider(provider);
+            _userAuthProviders.Add(userAuthProvider);
+
+            if (passwordHash != null && passwordSalt != null)
+            {
+                userAuthProvider.SetPassword(passwordHash, passwordSalt);
+            }
         }
     }
 }

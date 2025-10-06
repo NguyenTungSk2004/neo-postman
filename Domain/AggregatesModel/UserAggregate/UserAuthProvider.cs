@@ -10,13 +10,14 @@ namespace Domain.AggregatesModel.UserAggregate
         public string? PasswordHash { get; private set; }
         public string? PasswordSalt { get; private set; }
 
-        public DateTimeOffset? CreatedAt { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
 
         public UserAuthProvider(AuthProvider provider)
         {
             Provider = provider;
             this.MarkCreated();
+            this.MarkUpdated();
         }
         
         public void SetPassword(string passwordHash, string passwordSalt)

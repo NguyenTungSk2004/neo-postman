@@ -12,8 +12,8 @@ namespace Domain.AggregatesModel.UserAggregate
         public DateTimeOffset? EmailVerifiedAt { get; private set; }
         public bool IsDisabled { get; private set; }
 
-        public DateTimeOffset? CreatedAt { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset UpdatedAt { get; set; }
 
         private List<UserAuthProvider> _userAuthProviders = new();
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
@@ -26,6 +26,7 @@ namespace Domain.AggregatesModel.UserAggregate
             IsDisabled = false;
             EmailVerifiedAt = null;
             this.MarkCreated();
+            this.MarkUpdated();
         }
         public void Update(string name, string email, string? urlAvatar)
         {

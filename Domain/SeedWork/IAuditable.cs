@@ -2,11 +2,11 @@ namespace Domain.SeedWork;
 
 public interface ICreationTrackable
 {
-    public DateTimeOffset? CreatedAt { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 }
 public interface IUpdateTrackable
 {
-    public DateTimeOffset? UpdatedAt { get; set; }
+    public DateTimeOffset UpdatedAt { get; set; }
 }
 public interface IExpirable
 {

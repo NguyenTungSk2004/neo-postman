@@ -1,7 +1,6 @@
-using SharedKernel.Exceptions;
 using MediatR;
 using Domain.SeedWork;
-using SharedKernel.SeedWork;
+using Domain.Common.Extensions;
 
 namespace Application.UseCases.BaseAuditable.Recovery
 {
@@ -27,7 +26,7 @@ namespace Application.UseCases.BaseAuditable.Recovery
                 ) ?? throw new KeyNotFoundException($"Không tìm thấy bản ghi.");
 
                 if (!record.IsDeleted)
-                    throw new ExceptionHelper("Không thể khôi phục bản ghi chưa bị xóa");
+                    throw new ApplicationException("Không thể khôi phục bản ghi chưa bị xóa");
 
                 record.Recover();
                 await _repository.UpdateAsync(record, cancellationToken);
@@ -35,15 +34,15 @@ namespace Application.UseCases.BaseAuditable.Recovery
             }
             catch (KeyNotFoundException knfEx)
             {
-                throw new ExceptionHelper(knfEx.Message);
+                throw new KeyNotFoundException(knfEx.Message);
             }
             catch (UnauthorizedAccessException uaeEx)
             {
-                throw new ExceptionHelper(uaeEx.Message);
+                throw new UnauthorizedAccessException(uaeEx.Message);
             }
-            catch (ExceptionHelper ehEx)
+            catch (ApplicationException ehEx)
             {
-                throw new ExceptionHelper(ehEx.Message);
+                throw new ApplicationException(ehEx.Message);
             }
             catch (Exception ex)
             {

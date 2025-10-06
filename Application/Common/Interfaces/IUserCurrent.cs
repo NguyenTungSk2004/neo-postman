@@ -1,4 +1,4 @@
-namespace SharedKernel.Interfaces;
+namespace Application.Common.Interfaces;
 public interface ICurrentUser
 {
     int? UserId { get; }

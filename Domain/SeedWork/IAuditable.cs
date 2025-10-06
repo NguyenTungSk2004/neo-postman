@@ -1,4 +1,4 @@
-namespace SharedKernel.SeedWork;
+namespace Domain.SeedWork;
 
 public interface ICreationTrackable
 {

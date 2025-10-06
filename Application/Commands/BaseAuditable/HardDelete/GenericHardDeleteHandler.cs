@@ -1,9 +1,7 @@
-using SharedKernel.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Domain.SeedWork;
 using Domain.Specifications;
-using SharedKernel.SeedWork;
 
 namespace Application.UseCases.BaseAuditable.HardDelete
 {
@@ -29,7 +27,7 @@ namespace Application.UseCases.BaseAuditable.HardDelete
                 var toDelete = entities.Where(e => (bool)(e.GetType().GetProperty("IsDeleted")?.GetValue(e) ?? false)).ToList();
 
                 if (toDelete == null || toDelete.Count == 0)
-                    throw new ExceptionHelper("Không tìm thấy bất kỳ bản ghi nào");
+                    throw new ApplicationException("Không tìm thấy bất kỳ bản ghi nào");
 
                 await _repository.DeleteRangeAsync(toDelete, cancellationToken);
                 return true;
@@ -40,10 +38,10 @@ namespace Application.UseCases.BaseAuditable.HardDelete
 
                 if (errorMessage.Contains("REFERENCE constraint", StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new ExceptionHelper($"Không thể xóa vì thông tin bản ghi đang được sử dụng.");
+                    throw new ApplicationException($"Không thể xóa vì thông tin bản ghi đang được sử dụng.");
                 }
 
-                throw new ExceptionHelper($"Đã xảy ra lỗi khi xóa.");
+                throw new ApplicationException($"Đã xảy ra lỗi khi xóa.");
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -53,9 +51,9 @@ namespace Application.UseCases.BaseAuditable.HardDelete
             {
                 throw new KeyNotFoundException(ex.Message);
             }
-            catch (ExceptionHelper ex)
+            catch (ApplicationException ex)
             {
-                throw new ExceptionHelper(ex.Message);
+                throw new ApplicationException(ex.Message);
             }
             catch (Exception ex)
             {

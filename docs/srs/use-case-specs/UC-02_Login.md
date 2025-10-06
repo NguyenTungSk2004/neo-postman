@@ -5,7 +5,7 @@
 
 ## Điều kiện tiên quyết
 - Tài khoản tồn tại trong `Users`.
-- Có bản ghi `UserAuthProviders` tương ứng với `Provider = Password` (TODO: liệt kê đầy đủ giá trị enum).
+- Có bản ghi `UserAuthProviders` tương ứng với `Provider = Local` (TODO: liệt kê đầy đủ giá trị enum).
 
 ## Luồng chính
 1. Người dùng nhập `Email`, `Password`, thông tin thiết bị (nếu thu thập) và gửi yêu cầu.

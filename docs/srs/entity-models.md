@@ -57,7 +57,7 @@ Tài liệu này mô tả chi tiết schema cơ sở dữ liệu Neo Postman the
 - **Cột**:
   - `Id bigint` – PK.
   - `UserId bigint` – FK → `Users.Id` (NOT NULL).
-  - `Provider string` – tên provider (`Password`, `Github`, `Google`).
+  - `Provider enum` – tên provider (`Local`, `Github`, `Google`).
   - `PasswordHash string` – băm mật khẩu (đối với provider `Password`).
   - `PasswordSalt string` – muối mật khẩu.
   - `CreatedAt timestamp` – NOT NULL.

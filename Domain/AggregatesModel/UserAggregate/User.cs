@@ -18,9 +18,19 @@ namespace Domain.AggregatesModel.UserAggregate
         private List<UserAuthProvider> _userAuthProviders;
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
 
-        public User(string name, string email, string? urlAvatar)
+        protected User()
         {
-            UserValidator.EnsureValid(name, email, urlAvatar);
+            Name = string.Empty;
+            Email = string.Empty;
+            UrlAvatar = string.Empty;
+            IsDisabled = false;
+            _userAuthProviders = new List<UserAuthProvider>();
+        }
+        private User(string name, string email, string? urlAvatar)
+        {
+            UserValidator.EnsureValid(name, urlAvatar);
+            if (!email.IsValidEmail())
+                throw new DomainException("Invalid email format.");
 
             _userAuthProviders = new List<UserAuthProvider>();
 
@@ -39,12 +49,12 @@ namespace Domain.AggregatesModel.UserAggregate
             user.AddAuthProvider(AuthProvider.Local, passwordHash, passwordSalt);
             return user;
         }
-        public void Update(string name, string email, string? urlAvatar)
+
+        public void Update(string name, string? urlAvatar)
         {
-            UserValidator.EnsureValid(name, email, urlAvatar);
+            UserValidator.EnsureValid(name, urlAvatar);
 
             Name = name;
-            Email = email;
             UrlAvatar = urlAvatar ?? string.Empty;
             this.MarkUpdated();
         }

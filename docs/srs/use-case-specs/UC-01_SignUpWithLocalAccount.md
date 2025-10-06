@@ -1,4 +1,4 @@
-# UC-01 Đăng ký
+# UC-01 Đăng ký tài khoản
 
 - **Actor**: Khách chưa đăng nhập
 - **Mục đích**: Tạo tài khoản Neo Postman mới và khởi tạo thông tin xác minh email.

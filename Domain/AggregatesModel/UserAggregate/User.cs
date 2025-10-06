@@ -43,7 +43,7 @@ namespace Domain.AggregatesModel.UserAggregate
             this.MarkCreated();
             this.MarkUpdated();
         }
-        public static User CreateLocal(string name, string email, string passwordHash, string passwordSalt)
+        public static User CreateLocalAccount(string name, string email, string passwordHash, string passwordSalt)
         {
             var user = new User(name, email, null);
             user.AddAuthProvider(AuthProvider.Local, passwordHash, passwordSalt);

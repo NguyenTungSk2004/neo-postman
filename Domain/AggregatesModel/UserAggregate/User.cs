@@ -15,6 +15,9 @@ namespace Domain.AggregatesModel.UserAggregate
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 
+        public UserVerificationToken? CurrentVerificationToken { get; set; }
+        public List<UserSession> UserSessions { get; private set; } = new List<UserSession>();
+        
         private List<UserAuthProvider> _userAuthProviders;
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
 

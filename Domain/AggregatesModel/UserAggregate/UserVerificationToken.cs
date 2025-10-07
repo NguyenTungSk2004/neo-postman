@@ -1,0 +1,41 @@
+using Domain.Common.Extensions;
+using Domain.Common.Utilities;
+using Domain.SeedWork;
+
+namespace Domain.AggregatesModel.UserAggregate
+{
+    public class UserVerificationToken : Entity, IExpirable, ICreationTrackable
+    {
+        public string Token { get; private set; } = default!;
+        public TypeOfVerificationToken Type { get; private set; }
+
+        public DateTimeOffset? UsedAt { get; set; }
+        public DateTimeOffset ExpiresAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+
+        protected UserVerificationToken() { }
+        private UserVerificationToken(TypeOfVerificationToken type)
+        {
+            Type = type;
+            this.MarkCreated();
+        }
+        public static UserVerificationToken GenerateToken(TypeOfVerificationToken type, TimeSpan? duration = null)
+        {
+            var token = new UserVerificationToken(type)
+            {
+                Token = HashHelper.GenerateSecureToken(64)
+            };
+            token.MarkExpiredIn(duration ?? TimeSpan.FromHours(1));
+            return token;
+        }
+        public void MarkAsUsed()
+        {
+            if (UsedAt.HasValue)
+                throw new InvalidOperationException("Token has already been used.");
+            if (this.IsExpired())
+                throw new InvalidOperationException("Token has expired and cannot be used.");
+
+            UsedAt = DateTimeOffset.UtcNow;
+        }
+    }
+}

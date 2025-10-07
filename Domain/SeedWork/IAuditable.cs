@@ -10,7 +10,7 @@ public interface IUpdateTrackable
 }
 public interface IExpirable
 {
-    public DateTimeOffset? ExpiresAt { get; set; }
+    public DateTimeOffset ExpiresAt { get; set; }
 }
 public interface ISoftDeletable
 {

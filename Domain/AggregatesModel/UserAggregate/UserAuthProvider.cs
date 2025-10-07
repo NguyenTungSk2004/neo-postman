@@ -8,7 +8,6 @@ namespace Domain.AggregatesModel.UserAggregate
     {
         public AuthProvider Provider { get; private set; }
         public string? PasswordHash { get; private set; }
-        public string? PasswordSalt { get; private set; }
 
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
@@ -20,14 +19,13 @@ namespace Domain.AggregatesModel.UserAggregate
             this.MarkUpdated();
         }
         
-        public void SetPassword(string passwordHash, string passwordSalt)
+        public void SetPassword(string passwordHash)
         {
             if (Provider != AuthProvider.Local)
                 throw new DomainException("Password can only be set for local auth provider.");
-            if (string.IsNullOrWhiteSpace(passwordHash) || string.IsNullOrWhiteSpace(passwordSalt))
-                throw new DomainException("Password hash and salt must be provided for local auth provider.");
+            if (string.IsNullOrWhiteSpace(passwordHash))
+                throw new DomainException("Password hash must be provided for local auth provider.");
             PasswordHash = passwordHash;
-            PasswordSalt = passwordSalt;
             this.MarkUpdated();
         }
     }

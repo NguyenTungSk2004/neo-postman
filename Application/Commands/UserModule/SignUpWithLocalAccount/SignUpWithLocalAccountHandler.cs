@@ -22,8 +22,8 @@ namespace Application.Commands.UserModule.SignUpWithLocalAccount
             {
                 throw new Exception("Email already in use");
             }
-            (string hash, string salt) = _passwordHasher.HashPassword(request.Password);
-            var user = User.CreateLocalAccount(request.Name, request.Email, hash, salt);
+            string hash = _passwordHasher.HashPassword(request.Password);
+            var user = User.CreateLocalAccount(request.Name, request.Email, hash);
             await _userRepository.AddAsync(user);
             return true;
         }

@@ -16,6 +16,7 @@ namespace Infrastructure.DI
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<ICurrentUser, CurrentUser>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
 
             return services;
         }

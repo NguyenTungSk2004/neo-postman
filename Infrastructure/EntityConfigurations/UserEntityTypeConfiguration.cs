@@ -12,5 +12,13 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Id).ValueGeneratedNever();
+
+        builder.OwnsOne(u => u.Email, email =>
+        {
+            email.Property(e => e.Address)
+                 .HasColumnName("Email")
+                 .IsRequired()
+                 .HasMaxLength(255);
+        });
     }
 }

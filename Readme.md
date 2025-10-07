@@ -7,7 +7,7 @@ Neo Postman là nền tảng cộng tác giúp nhóm xây dựng, kiểm thử v
 | Phạm vi | Nội dung chính | Liên kết |
 | --- | --- | --- |
 | Yêu cầu | Đặc tả chức năng, actor, Use Case | [SRS](docs/srs/SRS.md) |
-| Use Case | Chi tiết UC-01 → UC-18 | [Thư viện Use Case](docs/srs/use-case-specs/UC-01_SignUp.md) |
+| Use Case | Chi tiết UC-01 → UC-18 | [Thư viện Use Case](docs/srs/use-case-specs/UC-01_SignUpWithLocalAccount.md) |
 | Thực thể | Mô tả bảng, quan hệ, index | [Entity Model](docs/srs/entity-models.md) |
 
 ## Hướng dẫn sử dụng

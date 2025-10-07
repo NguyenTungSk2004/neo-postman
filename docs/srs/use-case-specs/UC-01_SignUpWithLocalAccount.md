@@ -14,7 +14,7 @@
    - `IsDisabled = false`.
    - `EmailVerifiedAt = null`.
    - Ghi nhận `CreatedAt`, `UpdatedAt` theo thời điểm tạo.
-4. Hệ thống băm mật khẩu và lưu vào `UserAuthProviders` (trường `Provider`, `PasswordHash`, `PasswordSalt`, `CreatedAt`, `UpdatedAt`).
+4. Hệ thống băm mật khẩu và lưu vào `UserAuthProviders` (trường `Provider`, `PasswordHash`, `CreatedAt`, `UpdatedAt`).
 5. Hệ thống tạo bản ghi `UserVerificationTokens` với `Type = EmailConfirmation` (TODO: liệt kê đầy đủ giá trị enum), `Token`, `ExpiresAt`, `UsedAt = null` và liên kết `UserId` vừa tạo.
 6. Hệ thống gửi email xác minh chứa liên kết token tới địa chỉ người dùng cung cấp.
 7. Hệ thống trả về thông điệp thành công, thông báo người dùng cần xác minh email trước khi đăng nhập (nếu chính sách bắt buộc).

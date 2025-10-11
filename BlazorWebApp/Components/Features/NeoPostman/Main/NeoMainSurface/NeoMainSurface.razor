@@ -1,9 +1,0 @@
-@namespace BlazorWebApp.Components.Features.NeoPostman.Main
-
-<div class="neo-main" data-mode="@(_mode == NeoWorkspaceMode.History ? "history" : "builder")">
-    <NeoMainBar OnShowHistory="ShowHistory" HasHistoryEntries="@(_history.Count > 0)" IsHistoryMode="@(_mode == NeoWorkspaceMode.History)" />
-    <RequestBuilder Method="@_method" OnMethodChanged="UpdateMethodAsync" Url="@_url" OnUrlChanged="UpdateUrlAsync" OnSend="SendAsync" />
-    <RequestTabs Body="@_body" BodyChanged="UpdateBodyAsync" />
-    <ResponsePanel Response="@_response" />
-    <HistoryPanel Entries="@_history" OnBack="ShowBuilder" />
-</div>

@@ -1,6 +1,6 @@
 using MediatR;
 using Domain.SeedWork;
-using Domain.Specifications;
+using Domain.Common.Specifications;
 
 namespace Application.UseCases.BaseAuditable.HardDelete
 {

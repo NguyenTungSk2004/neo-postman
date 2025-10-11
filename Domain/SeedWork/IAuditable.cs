@@ -6,7 +6,7 @@ public interface ICreationTrackable
 }
 public interface IUpdateTrackable
 {
-    public DateTimeOffset UpdatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
 }
 public interface IExpirable
 {

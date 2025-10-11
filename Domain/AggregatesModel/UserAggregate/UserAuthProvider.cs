@@ -4,19 +4,14 @@ using Domain.SeedWork;
 
 namespace Domain.AggregatesModel.UserAggregate
 {
-    public class UserAuthProvider : Entity, ICreationTrackable, IUpdateTrackable
+    public class UserAuthProvider : AuditEntity
     {
         public AuthProvider Provider { get; private set; }
         public string? PasswordHash { get; private set; }
 
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
-
         public UserAuthProvider(AuthProvider provider)
         {
             Provider = provider;
-            this.MarkCreated();
-            this.MarkUpdated();
         }
         
         public void SetPassword(string passwordHash)

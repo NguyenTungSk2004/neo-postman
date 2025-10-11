@@ -1,6 +1,6 @@
 using MediatR;
 using Domain.SeedWork;
-using Domain.Specifications;
+using Domain.Common.Specifications;
 using Domain.Common.Extensions;
 
 namespace Application.UseCases.BaseAuditable.SoftDelete

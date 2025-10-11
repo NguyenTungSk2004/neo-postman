@@ -14,4 +14,4 @@ public class EfReadRepository<T> : RepositoryBase<T>, IReadRepository<T> where T
     public EfReadRepository(AppDbContext dbContext) : base(dbContext)
     {
     }
-}
+} 

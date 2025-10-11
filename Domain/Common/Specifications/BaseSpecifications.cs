@@ -1,7 +1,7 @@
 using Ardalis.Specification;
 using Domain.SeedWork;
 
-namespace Domain.Specifications
+namespace Domain.Common.Specifications
 {
     public class EntitiesByIdsSpecification<TEntity> : Specification<TEntity>
         where TEntity : Entity, IAggregateRoot, ISoftDeletable

@@ -4,16 +4,13 @@ using Domain.Common.Exceptions;
 
 namespace Domain.AggregatesModel.UserAggregate
 {
-    public class User : Entity, IAggregateRoot, ICreationTrackable, IUpdateTrackable
+    public class User : AuditEntity, IAggregateRoot
     {
         public string Name { get; private set; } = default!;
         public Email Email { get; private set; } = default!;
         public string UrlAvatar { get; private set; } = default!;
         public DateTimeOffset? EmailVerifiedAt { get; private set; }
         public bool IsDisabled { get; private set; }
-
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
 
         private List<UserVerificationToken> _currentVerificationToken;
         public IReadOnlyCollection<UserVerificationToken> CurrentVerificationToken => _currentVerificationToken.AsReadOnly();
@@ -43,9 +40,6 @@ namespace Domain.AggregatesModel.UserAggregate
             UrlAvatar = urlAvatar ?? string.Empty;
             IsDisabled = false;
             EmailVerifiedAt = null;
-
-            this.MarkCreated();
-            this.MarkUpdated();
         }
         public static User CreateLocalAccount(string name, string email, string passwordHash)
         {
@@ -83,10 +77,23 @@ namespace Domain.AggregatesModel.UserAggregate
                 userAuthProvider.SetPassword(passwordHash);
             }
         }
+        public void ChangePassword(string newPasswordHash)
+        {
+            var localProvider = _userAuthProviders.FirstOrDefault(x => x.Provider == AuthProvider.Local);
+            if (localProvider is null)
+                throw new DomainException("Local auth provider does not exist.");
+
+            localProvider.SetPassword(newPasswordHash);
+        }
         public void AddSession(string userAgent, string ipAddress)
         {
             var userSession = UserSession.CreateNewSession(userAgent, ipAddress);
             _userSessions.Add(userSession);
+        }
+        public void AddToken(TypeOfVerificationToken type, TimeSpan? duration = null)
+        {
+            var token = UserVerificationToken.GenerateToken(type, duration);
+            _currentVerificationToken.Add(token);
         }
     }
 }

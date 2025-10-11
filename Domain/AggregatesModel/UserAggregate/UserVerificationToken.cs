@@ -23,10 +23,14 @@ namespace Domain.AggregatesModel.UserAggregate
         {
             var token = new UserVerificationToken(type)
             {
-                Token = HashHelper.GenerateSecureToken(64)
+                Token = HashHelper.GenerateSecureToken(32)
             };
-            token.MarkExpiredIn(duration ?? TimeSpan.FromHours(1));
+            token.MarkExpiredIn(duration ?? TimeSpan.FromMinutes(5));
             return token;
+        }
+        public bool verifyToken(string token)
+        {
+            return Token == token && !this.IsExpired() && !UsedAt.HasValue;
         }
         public void MarkAsUsed()
         {

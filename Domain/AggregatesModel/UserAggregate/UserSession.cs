@@ -4,14 +4,12 @@ using Domain.SeedWork;
 
 namespace Domain.AggregatesModel.UserAggregate
 {
-    public class UserSession : Entity, ICreationTrackable, IUpdateTrackable, IExpirable
+    public class UserSession : AuditEntity, IExpirable
     {
         public string RefreshTokenHash { get; private set; } = default!;
         public string DeviceInfo { get; private set; } = default!;
         public string IPAddress { get; private set; } = default!;
 
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
         public DateTimeOffset ExpiresAt { get; set; }
 
         protected UserSession() { }
@@ -21,9 +19,6 @@ namespace Domain.AggregatesModel.UserAggregate
             RefreshTokenHash = refreshTokenHash;
             DeviceInfo = deviceInfo;
             IPAddress = ipAddress;
-
-            this.MarkCreated();
-            this.MarkUpdated();
         }
 
         public static UserSession CreateNewSession(
@@ -40,10 +35,9 @@ namespace Domain.AggregatesModel.UserAggregate
             session._plainToken = refreshToken;
             return session;
         }
-
         public void RenewSession(TimeSpan? duration = null)
         {
-            this.MarkExpiredIn(duration ?? TimeSpan.FromDays(7));
+            this.MarkExpiredIn(duration ?? TimeSpan.FromHours(1));
             this.MarkUpdated();
         }
 

@@ -7,6 +7,10 @@ public static class ExpiryExtensions
     {
         entity.ExpiresAt = DateTimeOffset.UtcNow.Add(duration);
     }
+    public static void MarkExpiredNow(this IExpirable entity)
+    {
+        entity.ExpiresAt = DateTimeOffset.UtcNow;
+    }
     public static void MarkExpiredAt(this IExpirable entity, DateTimeOffset expiredAt)
     {
         entity.ExpiresAt = expiredAt;

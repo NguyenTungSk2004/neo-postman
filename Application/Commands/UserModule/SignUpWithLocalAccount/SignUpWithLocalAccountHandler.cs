@@ -25,6 +25,7 @@ namespace Application.Commands.UserModule.SignUpWithLocalAccount
             string hash = _passwordHasher.HashPassword(request.Password);
             var user = User.CreateLocalAccount(request.Name, request.Email, hash);
             user.AddToken(TypeOfVerificationToken.EmailVerification, TimeSpan.FromHours(1));
+            
             await _userRepository.AddAsync(user);
             return true;
         }

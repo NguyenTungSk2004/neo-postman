@@ -15,21 +15,28 @@ namespace Domain.AggregatesModel.UserAggregate
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
 
-        public UserVerificationToken? CurrentVerificationToken { get; set; }
-        public List<UserSession> UserSessions { get; private set; } = new List<UserSession>();
+        private List<UserVerificationToken> _currentVerificationToken;
+        public IReadOnlyCollection<UserVerificationToken> CurrentVerificationToken => _currentVerificationToken.AsReadOnly();
+
+        private List<UserSession> _userSessions;
+        public IReadOnlyCollection<UserSession> UserSessions => _userSessions.AsReadOnly();
         
         private List<UserAuthProvider> _userAuthProviders;
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
 
         protected User()
         {
+            _userSessions = new List<UserSession>();
             _userAuthProviders = new List<UserAuthProvider>();
+            _currentVerificationToken = new List<UserVerificationToken>();
         }
         private User(string name, string email, string? urlAvatar)
         {
             UserValidator.EnsureValid(name, urlAvatar);
 
+            _userSessions = new List<UserSession>();
             _userAuthProviders = new List<UserAuthProvider>();
+            _currentVerificationToken = new List<UserVerificationToken>();
 
             Name = name;
             Email = new Email(email);
@@ -75,6 +82,11 @@ namespace Domain.AggregatesModel.UserAggregate
             {
                 userAuthProvider.SetPassword(passwordHash);
             }
+        }
+        public void AddSession(string userAgent, string ipAddress)
+        {
+            var userSession = UserSession.CreateNewSession(userAgent, ipAddress);
+            _userSessions.Add(userSession);
         }
     }
 }

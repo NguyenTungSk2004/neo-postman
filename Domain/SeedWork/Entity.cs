@@ -7,9 +7,25 @@ namespace Domain.SeedWork
         private int? _requestedHashCode;
         public long Id { get; protected set; }
 
+        private readonly List<IDomainEvent> _domainEvents = new();
+        public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
         protected Entity()
         {
             Id = YitIdHelper.NextId();
+        }
+
+        public void AddDomainEvent(IDomainEvent eventItem)
+        {
+            _domainEvents.Add(eventItem);
+        }
+        public void RemoveDomainEvent(IDomainEvent eventItem)
+        {
+            _domainEvents?.Remove(eventItem);
+        }
+        public void ClearDomainEvents()
+        {
+            _domainEvents?.Clear();
         }
 
         public override bool Equals(object? obj) => Equals(obj as Entity);

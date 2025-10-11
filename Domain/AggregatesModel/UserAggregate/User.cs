@@ -1,6 +1,7 @@
 using Domain.SeedWork;
 using Domain.Common.Extensions;
 using Domain.Common.Exceptions;
+using Domain.Events;
 
 namespace Domain.AggregatesModel.UserAggregate
 {
@@ -93,6 +94,7 @@ namespace Domain.AggregatesModel.UserAggregate
         public void AddToken(TypeOfVerificationToken type, TimeSpan? duration = null)
         {
             var token = UserVerificationToken.GenerateToken(type, duration);
+            token.AddDomainEvent(new SendEmailVerificationToken(token));
             _currentVerificationToken.Add(token);
         }
     }

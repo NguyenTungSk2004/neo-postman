@@ -1,4 +1,4 @@
-namespace Application.Common.Types
+namespace SharedKernel.Common   
 {
     public class Result<T>
     {

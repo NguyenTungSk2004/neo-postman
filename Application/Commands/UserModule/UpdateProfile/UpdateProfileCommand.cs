@@ -1,5 +1,5 @@
-using Application.Common.Types;
 using MediatR;
+using SharedKernel.Common;
 
 namespace Application.Commands.UserModule.UpdateProfile
 {

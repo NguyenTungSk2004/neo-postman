@@ -1,7 +1,7 @@
-using Application.Common.Types;
 using Domain.AggregatesModel.UserAggregate;
 using Domain.SeedWork;
 using MediatR;
+using SharedKernel.Common;
 
 namespace Application.Commands.UserModule.UpdateProfile
 {

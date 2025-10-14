@@ -1,9 +1,10 @@
+using SharedKernel.Common;
 using Application.Commands.UserModule.SignUpWithLocalAccount;
 using Application.Commands.UserModule.UpdateProfile;
-using Application.Common.Types;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Contracts.Request;
 
 namespace WebApi.API
 {
@@ -14,7 +15,7 @@ namespace WebApi.API
             var api = app.MapGroup("api/users").WithTags("Users");
 
             api.MapGet("/registerLocalAccount", RegisterLocalAccount).WithOpenApi();
-            api.MapPut("/updateProfile", UpdateProfile).WithOpenApi();
+            api.MapPut("/updateProfile/{id:long}", UpdateProfile).WithOpenApi();
             return api;
         }
         private static async Task<Results<Ok, BadRequest<string>, ProblemHttpResult>> RegisterLocalAccount(
@@ -27,16 +28,14 @@ namespace WebApi.API
         }
 
         private static async Task<Results<Ok, BadRequest<string>, ProblemHttpResult>> UpdateProfile(
-            [FromBody] UpdateProfileCommand command,
+            [FromRoute] long id,
+            [FromBody] UpdateProfileRequest request,
             [FromServices] IMediator mediator
         )
         {
+            var command = new UpdateProfileCommand(id, request.Name, request.UrlAvatar);
             Result result = await mediator.Send(command);
             return result ? TypedResults.Ok() : TypedResults.BadRequest(result.Error);
         }
-        private record UpdateProfileRequest(
-            string Name,
-            string? UrlAvatar
-        );
     }
 }

@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace BlazorWebApp.Configurations
+namespace WebApi.Configurations
 {
     public static class DI
     {

@@ -1,3 +1,4 @@
+using Application.Common.Types;
 using MediatR;
 
 namespace Application.Commands.UserModule.SignUpWithLocalAccount
@@ -6,5 +7,5 @@ namespace Application.Commands.UserModule.SignUpWithLocalAccount
         string Name,
         string Email,
         string Password
-    ): IRequest<bool>;
+    ): IRequest<Result>;
 }

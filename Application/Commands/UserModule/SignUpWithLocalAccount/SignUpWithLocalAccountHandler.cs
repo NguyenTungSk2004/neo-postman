@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Application.Common.Types;
 using Domain.AggregatesModel.UserAggregate;
 using Domain.AggregatesModel.UserAggregate.Specifications;
 using Domain.SeedWork;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace Application.Commands.UserModule.SignUpWithLocalAccount
 {
-    public class SignUpWithLocalAccountHandler : IRequestHandler<SignUpWithLocalAccountCommand, bool>
+    public class SignUpWithLocalAccountHandler : IRequestHandler<SignUpWithLocalAccountCommand, Result>
     {
         private readonly IRepository<User> _userRepository;
         private readonly IPasswordHasher _passwordHasher;
@@ -15,18 +16,17 @@ namespace Application.Commands.UserModule.SignUpWithLocalAccount
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
         }
-        public async Task<bool> Handle(SignUpWithLocalAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(SignUpWithLocalAccountCommand request, CancellationToken cancellationToken)
         {
             var emailSpec = new UserByEmailSpecification(request.Email);
             if (await _userRepository.AnyAsync(emailSpec))
-            {
-                throw new Exception("Email already in use");
-            }
+                return Result.Failure("Email is already registered");
+                
             string hash = _passwordHasher.HashPassword(request.Password);
             var user = User.CreateLocalAccount(request.Name, request.Email, hash);
             user.AddToken(TypeOfVerificationToken.EmailVerification, TimeSpan.FromHours(1));
             await _userRepository.AddAsync(user);
-            return true;
+            return Result.Success();
         }
     }
 }

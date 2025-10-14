@@ -1,3 +1,4 @@
+using Application.Common.Types;
 using MediatR;
 
 namespace Application.Commands.UserModule.UpdateProfile
@@ -6,5 +7,5 @@ namespace Application.Commands.UserModule.UpdateProfile
         long Id,
         string Name,
         string? UrlAvatar
-    ): IRequest<bool>;
+    ): IRequest<Result>;
 }

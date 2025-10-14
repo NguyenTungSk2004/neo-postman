@@ -1,17 +1,7 @@
 using BlazorWebApp.Components;
-using BlazorWebApp.Configurations;
 using MudBlazor.Services;
-using Infrastructure.DI;
-using Yitter.IdGenerator;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddInfrastructure();
-builder.Services.AddServices();
-
-// Cấu hình Snowflake Id Generator
-var options = new IdGeneratorOptions(1); // WorkerId = 1, bạn có thể đổi theo server
-YitIdHelper.SetIdGenerator(options);
 
 builder.Services.AddHttpContextAccessor();
 // Add services to the container.

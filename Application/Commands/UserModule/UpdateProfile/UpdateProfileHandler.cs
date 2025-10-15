@@ -1,4 +1,4 @@
-using Domain.AggregatesModel.UserAggregate.Entities;
+using Domain.AggregatesModel.UserAggregate;
 using Domain.SeedWork;
 using MediatR;
 using SharedKernel.Common;

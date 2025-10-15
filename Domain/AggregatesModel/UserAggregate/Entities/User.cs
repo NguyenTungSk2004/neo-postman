@@ -2,8 +2,11 @@ using Domain.SeedWork;
 using Domain.Common.Extensions;
 using Domain.Common.Exceptions;
 using Domain.Events;
+using Domain.AggregatesModel.UserAggregate.ValueObjects;
+using Domain.AggregatesModel.UserAggregate.Enums;
+using Domain.AggregatesModel.UserAggregate.Validators;
 
-namespace Domain.AggregatesModel.UserAggregate
+namespace Domain.AggregatesModel.UserAggregate.Entities
 {
     public class User : AuditEntity, IAggregateRoot
     {

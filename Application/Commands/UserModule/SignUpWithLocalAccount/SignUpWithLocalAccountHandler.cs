@@ -1,5 +1,6 @@
 using Application.Common.Interfaces;
-using Domain.AggregatesModel.UserAggregate;
+using Domain.AggregatesModel.UserAggregate.Entities;
+using Domain.AggregatesModel.UserAggregate.Enums;
 using Domain.AggregatesModel.UserAggregate.Specifications;
 using Domain.SeedWork;
 using MediatR;

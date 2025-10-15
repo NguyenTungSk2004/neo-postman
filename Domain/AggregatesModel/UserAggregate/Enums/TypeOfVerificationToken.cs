@@ -1,4 +1,4 @@
-namespace Domain.AggregatesModel.UserAggregate
+namespace Domain.AggregatesModel.UserAggregate.Enums
 {
     public enum TypeOfVerificationToken
     {

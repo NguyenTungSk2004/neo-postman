@@ -1,6 +1,6 @@
 using Domain.Common.Exceptions;
 
-namespace Domain.AggregatesModel.UserAggregate
+namespace Domain.AggregatesModel.UserAggregate.Validators
 {
     public static class UserValidator
     {

@@ -1,3 +1,4 @@
+using Domain.AggregatesModel.UserAggregate.Enums;
 using Domain.Common.Exceptions;
 using Domain.Common.Extensions;
 using Domain.SeedWork;

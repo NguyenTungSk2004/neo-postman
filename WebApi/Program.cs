@@ -28,6 +28,5 @@ app.UseHttpsRedirection();
 
 // Đăng ký API groups
 app.MapUserApi();
-app.MapOrderApi();
 
 app.Run();

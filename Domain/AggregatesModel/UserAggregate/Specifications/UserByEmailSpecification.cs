@@ -1,5 +1,4 @@
 using Ardalis.Specification;
-using Domain.AggregatesModel.UserAggregate.Entities;
 
 namespace Domain.AggregatesModel.UserAggregate.Specifications
 {

@@ -1,4 +1,4 @@
-using Domain.AggregatesModel.UserAggregate;
+using Domain.AggregatesModel.VerificationAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

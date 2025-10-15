@@ -1,9 +1,9 @@
 using Application.Common.Interfaces;
 using Domain.AggregatesModel.SessionAggregate;
-using Domain.AggregatesModel.SessionAggregate.Specifications;
-using Domain.AggregatesModel.UserAggregate.Entities;
-using Domain.AggregatesModel.UserAggregate.Enums;
+using Domain.AggregatesModel.UserAggregate;
 using Domain.AggregatesModel.UserAggregate.Specifications;
+using Domain.AggregatesModel.VerificationAggregate;
+using Domain.AggregatesModel.VerificationAggregate.Specifications;
 using Domain.SeedWork;
 using MediatR;
 using SharedKernel.Common;
@@ -14,15 +14,18 @@ namespace Application.Commands.UserModule.Login
     {
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<UserSession> _userSessionRepository;
+        private readonly IRepository<UserVerificationToken> _userVerificationTokenRepository;
         private readonly IPasswordHasher _passwordHasher;
         public LoginHandler(
             IRepository<User> userRepository,
             IRepository<UserSession> userSessionRepository,
+            IRepository<UserVerificationToken> userVerificationTokenRepository,
             IPasswordHasher passwordHasher
         )
         {
             _userRepository = userRepository;
             _userSessionRepository = userSessionRepository;
+            _userVerificationTokenRepository = userVerificationTokenRepository;
             _passwordHasher = passwordHasher;
         }
         public async Task<Result<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -34,11 +37,12 @@ namespace Application.Commands.UserModule.Login
 
             if (user.EmailVerifiedAt is null)
             {
-                var existingToken = user.CurrentVerificationToken.FirstOrDefault(x => x.IsValid());
-                if (existingToken is null)
+                var specToken = new UserVerificationTokenByUserId(user.Id, TypeOfVerificationToken.EmailVerification);
+                var existingToken = await _userVerificationTokenRepository.AnyAsync(specToken);
+                if (!existingToken)
                 {
-                    user.AddToken(TypeOfVerificationToken.EmailVerification);
-                    await _userRepository.SaveChangesAsync(cancellationToken);
+                    var token = UserVerificationToken.GenerateToken(user.Id, TypeOfVerificationToken.EmailVerification, TimeSpan.FromHours(1));
+                    await _userVerificationTokenRepository.AddAsync(token, cancellationToken);
                 }
                 return Result<string>.Failure("Email is not verified. Please verify your email before logging in.");
             }

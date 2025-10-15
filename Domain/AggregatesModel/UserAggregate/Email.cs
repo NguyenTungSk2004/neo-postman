@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Domain.SeedWork;
 
-namespace Domain.AggregatesModel.UserAggregate.ValueObjects
+namespace Domain.AggregatesModel.UserAggregate
 {
     public class Email : ValueObject
     {

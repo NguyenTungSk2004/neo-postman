@@ -1,4 +1,4 @@
-namespace Domain.AggregatesModel.UserAggregate.Enums
+namespace Domain.AggregatesModel.UserAggregate
 {
     public enum AuthProvider
     {

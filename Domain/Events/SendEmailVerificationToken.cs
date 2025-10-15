@@ -1,4 +1,4 @@
-using Domain.AggregatesModel.UserAggregate;
+using Domain.AggregatesModel.VerificationAggregate;
 using Domain.SeedWork;
 
 namespace Domain.Events;

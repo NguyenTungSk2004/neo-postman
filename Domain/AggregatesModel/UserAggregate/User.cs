@@ -1,12 +1,8 @@
 using Domain.SeedWork;
 using Domain.Common.Extensions;
 using Domain.Common.Exceptions;
-using Domain.Events;
-using Domain.AggregatesModel.UserAggregate.ValueObjects;
-using Domain.AggregatesModel.UserAggregate.Enums;
-using Domain.AggregatesModel.UserAggregate.Validators;
 
-namespace Domain.AggregatesModel.UserAggregate.Entities
+namespace Domain.AggregatesModel.UserAggregate
 {
     public class User : AuditEntity, IAggregateRoot
     {
@@ -15,24 +11,19 @@ namespace Domain.AggregatesModel.UserAggregate.Entities
         public string UrlAvatar { get; private set; } = default!;
         public DateTimeOffset? EmailVerifiedAt { get; private set; }
         public bool IsDisabled { get; private set; }
-
-        private List<UserVerificationToken> _currentVerificationToken;
-        public IReadOnlyCollection<UserVerificationToken> CurrentVerificationToken => _currentVerificationToken.AsReadOnly();
-
+        
         private List<UserAuthProvider> _userAuthProviders;
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
 
         protected User()
         {
             _userAuthProviders = new List<UserAuthProvider>();
-            _currentVerificationToken = new List<UserVerificationToken>();
         }
         private User(string name, string email, string? urlAvatar)
         {
             UserValidator.EnsureValid(name, urlAvatar);
 
             _userAuthProviders = new List<UserAuthProvider>();
-            _currentVerificationToken = new List<UserVerificationToken>();
 
             Name = name;
             Email = new Email(email);
@@ -82,20 +73,6 @@ namespace Domain.AggregatesModel.UserAggregate.Entities
                 throw new DomainException("Local auth provider does not exist.");
 
             localProvider.SetPassword(newPasswordHash);
-        }
-        public void AddToken(TypeOfVerificationToken type, TimeSpan? duration = null)
-        {
-            var token = UserVerificationToken.GenerateToken(type, duration);
-            token.AddDomainEvent(new SendEmailVerificationToken(token));
-            _currentVerificationToken.Add(token);
-        }
-        public void RemoveToken(string token)
-        {
-            var existingToken = _currentVerificationToken.FirstOrDefault(x => x.Token == token);
-            if (existingToken is null)
-                throw new DomainException("Token not found.");
-
-            _currentVerificationToken.Remove(existingToken);
         }
     }
 }

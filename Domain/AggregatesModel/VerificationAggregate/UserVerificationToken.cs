@@ -1,13 +1,13 @@
-using Domain.AggregatesModel.UserAggregate.Enums;
 using Domain.Common.Extensions;
 using Domain.Common.Utilities;
 using Domain.Events;
 using Domain.SeedWork;
 
-namespace Domain.AggregatesModel.UserAggregate
+namespace Domain.AggregatesModel.VerificationAggregate
 {
-    public class UserVerificationToken : Entity, IExpirable, ICreationTrackable
+    public class UserVerificationToken : Entity, IExpirable, ICreationTrackable, IAggregateRoot
     {
+        public long UserId { get; private set; }
         public string Token { get; private set; } = default!;
         public TypeOfVerificationToken Type { get; private set; }
 
@@ -16,14 +16,15 @@ namespace Domain.AggregatesModel.UserAggregate
         public DateTimeOffset CreatedAt { get; set; }
 
         protected UserVerificationToken() { }
-        private UserVerificationToken(TypeOfVerificationToken type)
+        private UserVerificationToken(long userId, TypeOfVerificationToken type)
         {
+            UserId = userId;
             Type = type;
             this.MarkCreated();
         }
-        public static UserVerificationToken GenerateToken(TypeOfVerificationToken type, TimeSpan? duration = null)
+        public static UserVerificationToken GenerateToken(long userId, TypeOfVerificationToken type, TimeSpan? duration = null)
         {
-            var token = new UserVerificationToken(type)
+            var token = new UserVerificationToken(userId, type)
             {
                 Token = HashHelper.GenerateSecureToken(32)
             };

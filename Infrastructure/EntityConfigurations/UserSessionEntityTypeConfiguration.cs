@@ -1,5 +1,5 @@
 using Domain.AggregatesModel.SessionAggregate;
-using Domain.AggregatesModel.UserAggregate.Entities;
+using Domain.AggregatesModel.UserAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

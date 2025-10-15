@@ -31,8 +31,7 @@ public class AppDbContext : DbContext
       
     foreach (var entity in entities)
     {
-      var domainEvents = entity.DomainEvents.ToArray();
-      entity.ClearDomainEvents();
+      var domainEvents = entity.DomainEvents.ToArray(); // sao chép các domain event ra mảng để tránh việc thay đổi collection trong quá trình lặp
       foreach (var domainEvent in domainEvents)
       {
           var notification = (INotification)Activator.CreateInstance(
@@ -42,6 +41,7 @@ public class AppDbContext : DbContext
 
           await _mediator.Publish(notification, cancellationToken);
       }
+      entity.ClearDomainEvents(); // xóa hết domain event sau khi đã xử lý xong
     }
     return result;
   }

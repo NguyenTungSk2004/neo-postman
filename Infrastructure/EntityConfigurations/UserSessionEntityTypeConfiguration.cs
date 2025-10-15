@@ -1,4 +1,5 @@
-using Domain.AggregatesModel.UserAggregate;
+using Domain.AggregatesModel.SessionAggregate;
+using Domain.AggregatesModel.UserAggregate.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,7 +14,10 @@ namespace Infrastructure.EntityConfigurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedNever();
 
-            builder.Property<long>("UserId");
+            builder.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

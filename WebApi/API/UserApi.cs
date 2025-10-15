@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Contracts.Request;
+using Application.Commands.UserModule.Login;
 
 namespace WebApi.API
 {
@@ -36,6 +37,23 @@ namespace WebApi.API
             var command = new UpdateProfileCommand(id, request.Name, request.UrlAvatar);
             Result result = await mediator.Send(command);
             return result ? TypedResults.Ok() : TypedResults.BadRequest(result.Error);
+        }
+        
+        private static async Task<Results<Ok<string>, BadRequest<string>, ProblemHttpResult>> Login(
+            [FromBody] LoginRequest request,
+            [FromServices] IMediator mediator
+        )
+        {
+            string deviceInfo = $"{request.Device} - {request.Browser}";
+            var command = new LoginCommand(
+                request.Email,
+                request.Password,
+                deviceInfo,
+                request.IpAddress
+            );
+
+            Result<string> result = await mediator.Send(command);
+            return result ? TypedResults.Ok(result.Value) : TypedResults.BadRequest(result.Error);
         }
     }
 }

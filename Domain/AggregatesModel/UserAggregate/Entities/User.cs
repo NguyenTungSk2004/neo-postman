@@ -19,15 +19,11 @@ namespace Domain.AggregatesModel.UserAggregate.Entities
         private List<UserVerificationToken> _currentVerificationToken;
         public IReadOnlyCollection<UserVerificationToken> CurrentVerificationToken => _currentVerificationToken.AsReadOnly();
 
-        private List<UserSession> _userSessions;
-        public IReadOnlyCollection<UserSession> UserSessions => _userSessions.AsReadOnly();
-        
         private List<UserAuthProvider> _userAuthProviders;
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
 
         protected User()
         {
-            _userSessions = new List<UserSession>();
             _userAuthProviders = new List<UserAuthProvider>();
             _currentVerificationToken = new List<UserVerificationToken>();
         }
@@ -35,7 +31,6 @@ namespace Domain.AggregatesModel.UserAggregate.Entities
         {
             UserValidator.EnsureValid(name, urlAvatar);
 
-            _userSessions = new List<UserSession>();
             _userAuthProviders = new List<UserAuthProvider>();
             _currentVerificationToken = new List<UserVerificationToken>();
 
@@ -51,7 +46,6 @@ namespace Domain.AggregatesModel.UserAggregate.Entities
             user.AddAuthProvider(AuthProvider.Local, passwordHash);
             return user;
         }
-
         public void Update(string name, string? urlAvatar)
         {
             UserValidator.EnsureValid(name, urlAvatar);
@@ -89,16 +83,19 @@ namespace Domain.AggregatesModel.UserAggregate.Entities
 
             localProvider.SetPassword(newPasswordHash);
         }
-        public void AddSession(string userAgent, string ipAddress)
-        {
-            var userSession = UserSession.CreateNewSession(userAgent, ipAddress);
-            _userSessions.Add(userSession);
-        }
         public void AddToken(TypeOfVerificationToken type, TimeSpan? duration = null)
         {
             var token = UserVerificationToken.GenerateToken(type, duration);
             token.AddDomainEvent(new SendEmailVerificationToken(token));
             _currentVerificationToken.Add(token);
+        }
+        public void RemoveToken(string token)
+        {
+            var existingToken = _currentVerificationToken.FirstOrDefault(x => x.Token == token);
+            if (existingToken is null)
+                throw new DomainException("Token not found.");
+
+            _currentVerificationToken.Remove(existingToken);
         }
     }
 }

@@ -9,6 +9,6 @@ public class SendEmailVerificationTokenHandler : INotificationHandler<DomainEven
     {
         var token = notification.DomainEvent.Token;
 
-        // Logic to send email with the verification token
+        await Task.CompletedTask;
     }
 }

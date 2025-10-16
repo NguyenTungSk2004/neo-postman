@@ -15,6 +15,7 @@ namespace Infrastructure.DI
                 options.UseSqlServer("Server=.;Database=neo-postman;Trusted_Connection=True;TrustServerCertificate=True;"));
 
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICurrentUser, CurrentUser>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
 

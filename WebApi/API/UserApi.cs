@@ -17,6 +17,7 @@ namespace WebApi.API
 
             api.MapGet("/registerLocalAccount", RegisterLocalAccount).WithOpenApi();
             api.MapPut("/updateProfile/{id:long}", UpdateProfile).WithOpenApi();
+            api.MapPost("/login", Login).WithOpenApi();
             return api;
         }
         private static async Task<Results<Ok, BadRequest<string>, ProblemHttpResult>> RegisterLocalAccount(

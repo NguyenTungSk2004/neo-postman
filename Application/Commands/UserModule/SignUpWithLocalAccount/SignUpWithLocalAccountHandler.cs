@@ -1,4 +1,3 @@
-using System.Transactions;
 using Application.Common.Interfaces;
 using Domain.AggregatesModel.UserAggregate;
 using Domain.AggregatesModel.UserAggregate.Specifications;

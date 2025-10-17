@@ -10,19 +10,30 @@ on:
 
 jobs:
   build-and-test:
+    runs-on: ${{ matrix.os }}
     strategy:
-        matrix:
-          os: [ubuntu-latest, windows-latest]
-        runs-on: ${{ matrix.os }}
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '9.0.306'
+
+      - name: Check .NET info
+        run: dotnet --info
 
       - name: Restore dependencies
         run: dotnet restore
@@ -32,3 +43,10 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --configuration Release --verbosity normal
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}
+          path: '**/TestResults/*.trx'

@@ -18,6 +18,10 @@ namespace Domain.AggregatesModel.CollectionAggregate
             Name = name;
             Description = description;
         }
+        public static Collection Create(long workspaceId, string name, string? description)
+        {
+            return new Collection(workspaceId, name, description);
+        }
 
         public void UpdateName(string name)
         {

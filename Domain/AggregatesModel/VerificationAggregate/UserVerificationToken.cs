@@ -1,3 +1,4 @@
+using Domain.AggregatesModel.UserAggregate;
 using Domain.Common.Extensions;
 using Domain.Common.Utilities;
 using Domain.Events;
@@ -14,6 +15,8 @@ namespace Domain.AggregatesModel.VerificationAggregate
         public DateTimeOffset? UsedAt { get; set; }
         public DateTimeOffset ExpiresAt { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
+
+        public User User { get; private set; } = default!;
 
         protected UserVerificationToken() { }
         private UserVerificationToken(long userId, TypeOfVerificationToken type)
@@ -34,11 +37,11 @@ namespace Domain.AggregatesModel.VerificationAggregate
         }
         public bool verifyToken(string token)
         {
-            return Token == token && !this.IsExpired() && !UsedAt.HasValue;
+            return Token == token && IsValid();
         }
         public bool IsValid()
         {
-            return DateTimeOffset.UtcNow < ExpiresAt && !UsedAt.HasValue;
+            return !this.IsExpired() && !UsedAt.HasValue;
         }
         public void MarkAsUsed()
         {

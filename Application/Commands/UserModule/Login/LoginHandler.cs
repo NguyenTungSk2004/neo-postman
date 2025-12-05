@@ -37,7 +37,7 @@ namespace Application.Commands.UserModule.Login
 
             if (user.EmailVerifiedAt is null)
             {
-                var specToken = new UserVerificationTokenByUserId(user.Id, TypeOfVerificationToken.EmailVerification);
+                var specToken = UserVerificationTokenSpecification.ByUserId(user.Id, TypeOfVerificationToken.EmailVerification);
                 var existingToken = await _userVerificationTokenRepository.AnyAsync(specToken);
                 if (!existingToken)
                 {

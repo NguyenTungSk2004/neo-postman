@@ -13,7 +13,11 @@ namespace Infrastructure.EntityConfigurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedNever();
 
-            builder.Property<long>("UserId");
+            builder.HasOne(x => x.User) // Mối quan hệ một-nhiều với User
+                   .WithMany()
+                   .HasForeignKey(x => x.UserId) // Sử dụng thuộc tính UserId trực tiếp trong UserVerificationToken
+                   .IsRequired() // Đảm bảo rằng UserId là bắt buộc
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

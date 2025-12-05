@@ -6,7 +6,8 @@ namespace Domain.AggregatesModel.UserAggregate.Specifications
     {
         public UserByEmailSpecification(string email)
         {
-            Query.Where(u => u.Email.ToString() == email);
+            Query.Where(u => u.Email.Address == email);
+            Query.Include(u => u.UserAuthProviders);
         }
     }
 }

@@ -16,5 +16,5 @@ public static class ExpiryExtensions
         entity.ExpiresAt = expiredAt;
     }
     public static bool IsExpired(this IExpirable entity)
-        => entity.ExpiresAt > DateTimeOffset.UtcNow;
+        => entity.ExpiresAt <= DateTimeOffset.UtcNow;
 }

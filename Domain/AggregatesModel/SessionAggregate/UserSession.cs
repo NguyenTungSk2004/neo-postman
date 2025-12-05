@@ -1,3 +1,4 @@
+using Domain.AggregatesModel.UserAggregate;
 using Domain.Common.Extensions;
 using Domain.Common.Utilities;
 using Domain.SeedWork;
@@ -13,6 +14,7 @@ namespace Domain.AggregatesModel.SessionAggregate
 
         public DateTimeOffset ExpiresAt { get; set; }
 
+        public User User { get; private set; } = default!;
         protected UserSession() { }
 
         private UserSession(long userId, string refreshTokenHash, string deviceInfo, string ipAddress)
@@ -45,11 +47,6 @@ namespace Domain.AggregatesModel.SessionAggregate
             this.MarkExpiredIn(duration ?? TimeSpan.FromHours(1));
             _plainToken = refreshToken;
             this.MarkUpdated();
-        }
-
-        public bool ValidateRefreshToken(string token)
-        {
-            return RefreshTokenHash == HashHelper.HashToken(token) && !this.IsExpired();
         }
 
         // Lưu token gốc tạm thời (không map sang DB)

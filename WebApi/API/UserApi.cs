@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel.Contracts.Request;
 using Application.Commands.UserModule.Login;
+using Domain.AggregatesModel.VerificationAggregate;
+using Application.Commands.UserModule.VerifyToken;
 
 namespace WebApi.API
 {
@@ -15,9 +17,10 @@ namespace WebApi.API
         {
             var api = app.MapGroup("api/users").WithTags("Users");
 
-            api.MapGet("/registerLocalAccount", RegisterLocalAccount).WithOpenApi();
+            api.MapPost("/registerLocalAccount", RegisterLocalAccount).WithOpenApi();
             api.MapPut("/updateProfile/{id:long}", UpdateProfile).WithOpenApi();
             api.MapPost("/login", Login).WithOpenApi();
+            api.MapPost("/verifyToken", VerifyToken).WithOpenApi();
             return api;
         }
         private static async Task<Results<Ok, BadRequest<string>, ProblemHttpResult>> RegisterLocalAccount(
@@ -55,6 +58,23 @@ namespace WebApi.API
 
             Result<string> result = await mediator.Send(command);
             return result ? TypedResults.Ok(result.Value) : TypedResults.BadRequest(result.Error);
+        }
+
+        private static async Task<Results<Ok, BadRequest<string>, ProblemHttpResult>> VerifyToken(
+            [FromBody] VerifyTokenRequest request,
+            [FromServices] IMediator mediator
+        )
+        {
+            if (!Enum.IsDefined(typeof(TypeOfVerificationToken), request.Type))
+            {
+                return TypedResults.BadRequest("Invalid verification token type.");
+            }
+
+            TypeOfVerificationToken type = (TypeOfVerificationToken)request.Type;
+            var command = new VerifyTokenCommand(request.Token, type);
+
+            Result result = await mediator.Send(command);
+            return result ? TypedResults.Ok() : TypedResults.BadRequest(result.Error);
         }
     }
 }

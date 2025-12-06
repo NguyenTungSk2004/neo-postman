@@ -1,13 +1,13 @@
-using SharedKernel.Common;
+using Application.Commands.UserModule.Login;
 using Application.Commands.UserModule.SignUpWithLocalAccount;
 using Application.Commands.UserModule.UpdateProfile;
+using Application.Commands.UserModule.VerifyToken;
+using Domain.AggregatesModel.VerificationAggregate;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Common;
 using SharedKernel.Contracts.Request;
-using Application.Commands.UserModule.Login;
-using Domain.AggregatesModel.VerificationAggregate;
-using Application.Commands.UserModule.VerifyToken;
 
 namespace WebApi.API
 {
@@ -42,7 +42,7 @@ namespace WebApi.API
             Result result = await mediator.Send(command);
             return result ? TypedResults.Ok() : TypedResults.BadRequest(result.Error);
         }
-        
+
         private static async Task<Results<Ok<string>, BadRequest<string>, ProblemHttpResult>> Login(
             [FromBody] LoginRequest request,
             [FromServices] IMediator mediator

@@ -1,6 +1,6 @@
 namespace SharedKernel.Contracts.Request
 {
-    public record LoginRequest(
+    public readonly record struct LoginRequest(
         string Email,
         string Password,
         string Device,

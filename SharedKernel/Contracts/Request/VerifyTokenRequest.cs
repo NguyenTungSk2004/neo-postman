@@ -1,6 +1,6 @@
 namespace SharedKernel.Contracts.Request
 {
-    public record VerifyTokenRequest(
+    public readonly record struct VerifyTokenRequest(
         string Token,
         int Type
     );

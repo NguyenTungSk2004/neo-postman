@@ -1,6 +1,6 @@
 namespace SharedKernel.Contracts.Request
 {
-    public record UpdateProfileRequest(
+    public readonly record struct UpdateProfileRequest(
         string Name,
         string? UrlAvatar
     );

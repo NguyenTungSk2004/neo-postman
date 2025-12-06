@@ -1,6 +1,6 @@
-using Domain.SeedWork;
-using Domain.Common.Extensions;
 using Domain.Common.Exceptions;
+using Domain.Common.Extensions;
+using Domain.SeedWork;
 
 namespace Domain.AggregatesModel.UserAggregate
 {
@@ -11,8 +11,8 @@ namespace Domain.AggregatesModel.UserAggregate
         public string UrlAvatar { get; private set; } = default!;
         public DateTimeOffset? EmailVerifiedAt { get; private set; }
         public bool IsDisabled { get; private set; }
-        
-        private List<UserAuthProvider> _userAuthProviders;
+
+        private readonly List<UserAuthProvider> _userAuthProviders;
         public IReadOnlyCollection<UserAuthProvider> UserAuthProviders => _userAuthProviders.AsReadOnly();
 
         protected User()

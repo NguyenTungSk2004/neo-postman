@@ -66,7 +66,7 @@ namespace Domain.UnitTests
 
             // Act & Assert
             var exception = Assert.Throws<DomainException>(() => user.MarkEmailAsVerified());
-            Assert.Equal($"Email {user.Email.Address} has been verified.", exception.Message);
+            Assert.Equal($"Email {user.Email} has been verified.", exception.Message);
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace Domain.UnitTests
 
             // Act & Assert
             var exception = Assert.Throws<DomainException>(() => user.AddAuthProvider(AuthProvider.Local));
-            Assert.Equal($"Auth provider {AuthProvider.Local} already exists for user {user.Email.Address}.", exception.Message);
+            Assert.Equal($"Auth provider {AuthProvider.Local} already exists for user {user.Email}.", exception.Message);
         }
 
         [Fact]

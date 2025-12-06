@@ -74,7 +74,7 @@ namespace Application.UnitTests
 
             _mockUserVerificationTokenRepository.Setup(
                 r => r.AnyAsync(
-                    It.IsAny<UserVerificationTokenByUserId>(),
+                    UserVerificationTokenSpecification.ByUserId(user.Id, TypeOfVerificationToken.EmailVerification),
                     It.IsAny<CancellationToken>()
                 )
             ).ReturnsAsync(false); // No existing token
@@ -105,7 +105,7 @@ namespace Application.UnitTests
             var command = new LoginCommand("test@example.com", "password", "device", "ip");
             _mockUserRepository.Setup(r => r.FirstOrDefaultAsync(It.IsAny<UserByEmailSpecification>(), It.IsAny<CancellationToken>()))
                                .ReturnsAsync(user);
-            _mockUserVerificationTokenRepository.Setup(r => r.AnyAsync(It.IsAny<UserVerificationTokenByUserId>(), It.IsAny<CancellationToken>()))
+            _mockUserVerificationTokenRepository.Setup(r => r.AnyAsync(It.IsAny<UserVerificationTokenSpecification>(), It.IsAny<CancellationToken>()))
                                                 .ReturnsAsync(true); // Existing token
 
             // Act

@@ -1,11 +1,11 @@
+using Domain.AggregatesModel.VerificationAggregate;
 using MediatR;
 using SharedKernel.Common;
-using Domain.AggregatesModel.VerificationAggregate;
 
 namespace Application.Commands.UserModule.VerifyToken
 {
-    public record VerifyTokenCommand(
+    public readonly record struct VerifyTokenCommand(
         string Token,
         TypeOfVerificationToken Type
-    ) : IRequest<Result>;    
+    ) : IRequest<Result>;
 }

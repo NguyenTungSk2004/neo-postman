@@ -1,19 +1,15 @@
-using MediatR;
-using Domain.SeedWork;
 using Domain.Common.Specifications;
+using Domain.SeedWork;
+using MediatR;
 
-namespace Application.UseCases.BaseAuditable.HardDelete
+namespace Application.Commands.BaseAuditable.HardDelete
 {
-    public abstract class GenericHardDeleteHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
+    public abstract class GenericHardDeleteHandler<TEntity, TCommand>(
+        IRepository<TEntity> repository
+    ) : IRequestHandler<TCommand, bool>
         where TEntity : Entity, ISoftDeletable, IAggregateRoot
         where TCommand : GenericHardDeleteCommand
     {
-        private readonly IRepository<TEntity> _repository;
-
-        protected GenericHardDeleteHandler(IRepository<TEntity> repository)
-        {
-            _repository = repository;
-        }
         public async Task<bool> Handle(TCommand request, CancellationToken cancellationToken)
         {
             try
@@ -22,13 +18,13 @@ namespace Application.UseCases.BaseAuditable.HardDelete
                     throw new UnauthorizedAccessException("User không có quyền xóa vĩnh viễn bản ghi");
 
                 var spec = new EntitiesByIdsSpecification<TEntity>(request.Ids, true);
-                var entities = await _repository.ListAsync(spec, cancellationToken);
+                var entities = await repository.ListAsync(spec, cancellationToken);
                 var toDelete = entities.Where(e => (bool)(e.GetType().GetProperty("IsDeleted")?.GetValue(e) ?? false)).ToList();
 
                 if (toDelete == null || toDelete.Count == 0)
                     throw new ApplicationException("Không tìm thấy bất kỳ bản ghi nào");
 
-                await _repository.DeleteRangeAsync(toDelete, cancellationToken);
+                await repository.DeleteRangeAsync(toDelete, cancellationToken);
                 return true;
             }
             catch (UnauthorizedAccessException ex)

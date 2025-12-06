@@ -3,7 +3,7 @@ using SharedKernel.Common;
 
 namespace Application.Commands.UserModule.Login
 {
-    public record LoginCommand(
+    public readonly record struct LoginCommand(
         string Email,
         string Password,
         string DeviceInfo,

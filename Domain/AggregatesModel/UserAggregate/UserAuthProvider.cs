@@ -13,7 +13,7 @@ namespace Domain.AggregatesModel.UserAggregate
         {
             Provider = provider;
         }
-        
+
         public void SetPassword(string passwordHash)
         {
             if (Provider != AuthProvider.Local)

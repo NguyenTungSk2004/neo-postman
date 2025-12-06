@@ -1,18 +1,15 @@
-using MediatR;
-using Domain.SeedWork;
 using Domain.Common.Extensions;
+using Domain.SeedWork;
+using MediatR;
 
-namespace Application.UseCases.BaseAuditable.Recovery
+namespace Application.Commands.BaseAuditable.Recovery
 {
-    public abstract class GenericRecoveryHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
+    public abstract class GenericRecoveryHandler<TEntity, TCommand>(
+        IRepository<TEntity> repository
+    ) : IRequestHandler<TCommand, bool>
         where TEntity : Entity, ISoftDeletable, IAggregateRoot
         where TCommand : GenericRecoveryCommand
     {
-        private readonly IRepository<TEntity> _repository;
-        protected GenericRecoveryHandler(IRepository<TEntity> repository)
-        {
-            _repository = repository;
-        }
         public async Task<bool> Handle(TCommand request, CancellationToken cancellationToken)
         {
             try
@@ -20,7 +17,7 @@ namespace Application.UseCases.BaseAuditable.Recovery
                 if (request.UserId != 1)
                     throw new UnauthorizedAccessException("User không có quyền khôi phục bản ghi");
 
-                var record = await _repository.GetByIdAsync(
+                var record = await repository.GetByIdAsync(
                     request.Id,
                     cancellationToken
                 ) ?? throw new KeyNotFoundException($"Không tìm thấy bản ghi.");
@@ -29,7 +26,7 @@ namespace Application.UseCases.BaseAuditable.Recovery
                     throw new ApplicationException("Không thể khôi phục bản ghi chưa bị xóa");
 
                 record.Recover();
-                await _repository.UpdateAsync(record, cancellationToken);
+                await repository.UpdateAsync(record, cancellationToken);
                 return true;
             }
             catch (KeyNotFoundException knfEx)

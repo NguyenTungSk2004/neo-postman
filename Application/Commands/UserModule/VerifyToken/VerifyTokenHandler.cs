@@ -1,22 +1,19 @@
+using Domain.AggregatesModel.VerificationAggregate;
+using Domain.AggregatesModel.VerificationAggregate.Specifications;
+using Domain.SeedWork;
 using MediatR;
 using SharedKernel.Common;
-using Domain.AggregatesModel.VerificationAggregate;
-using Domain.SeedWork;
-using Domain.AggregatesModel.VerificationAggregate.Specifications;
 
 namespace Application.Commands.UserModule.VerifyToken
 {
-    public class VerifyTokenHandler: IRequestHandler<VerifyTokenCommand, Result>
+    public class VerifyTokenHandler(
+        IRepository<UserVerificationToken> userVerificationTokenRepository
+    ) : IRequestHandler<VerifyTokenCommand, Result>
     {
-        private readonly IRepository<UserVerificationToken> _userVerificationTokenRepository;
-        public VerifyTokenHandler(IRepository<UserVerificationToken> userVerificationTokenRepository)
-        {
-            _userVerificationTokenRepository = userVerificationTokenRepository;
-        }
         public async Task<Result> Handle(VerifyTokenCommand request, CancellationToken cancellationToken)
         {
             var spec = UserVerificationTokenSpecification.ByToken(request.Token, request.Type);
-            var tokenEntity =  await _userVerificationTokenRepository.FirstOrDefaultAsync(spec, cancellationToken);
+            var tokenEntity = await userVerificationTokenRepository.FirstOrDefaultAsync(spec, cancellationToken);
             if (tokenEntity is null)
                 return Result.Failure("Invalid or expired verification token.");
 
@@ -25,9 +22,9 @@ namespace Application.Commands.UserModule.VerifyToken
             {
                 tokenEntity.User.MarkEmailAsVerified();
             }
-            await _userVerificationTokenRepository.UpdateAsync(tokenEntity, cancellationToken);
+            await userVerificationTokenRepository.UpdateAsync(tokenEntity, cancellationToken);
 
             return Result.Success();
         }
-    }    
+    }
 }

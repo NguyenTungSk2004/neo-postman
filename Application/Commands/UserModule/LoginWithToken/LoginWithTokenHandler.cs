@@ -1,5 +1,6 @@
 using Domain.AggregatesModel.SessionAggregate;
 using Domain.AggregatesModel.SessionAggregate.Specifications;
+using Domain.AggregatesModel.UserAggregate;
 using Domain.Common.Utilities;
 using Domain.SeedWork;
 using MediatR;
@@ -9,7 +10,7 @@ namespace Application.Commands.UserModule.LoginWithToken
 {
     public class LoginWithTokenHandler(
         IRepository<UserSession> userSessionRepository,
-        IRepository<Domain.AggregatesModel.UserAggregate.User> userRepository)
+        IRepository<User> userRepository)
         : IRequestHandler<LoginWithTokenCommand, Result>
     {
         public async Task<Result> Handle(LoginWithTokenCommand request, CancellationToken cancellationToken)

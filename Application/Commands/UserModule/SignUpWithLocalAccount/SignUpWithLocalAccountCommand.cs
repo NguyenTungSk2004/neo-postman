@@ -3,9 +3,9 @@ using SharedKernel.Common;
 
 namespace Application.Commands.UserModule.SignUpWithLocalAccount
 {
-    public record SignUpWithLocalAccountCommand(
+    public readonly record struct SignUpWithLocalAccountCommand(
         string Name,
         string Email,
         string Password
-    ): IRequest<Result>;
+    ) : IRequest<Result>;
 }

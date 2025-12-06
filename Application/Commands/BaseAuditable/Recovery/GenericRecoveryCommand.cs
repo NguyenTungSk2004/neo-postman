@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Application.UseCases.BaseAuditable.Recovery
+namespace Application.Commands.BaseAuditable.Recovery
 {
     public abstract record GenericRecoveryCommand(long Id, long UserId) : IRequest<bool>;
 }

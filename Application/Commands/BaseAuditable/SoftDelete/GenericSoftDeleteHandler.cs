@@ -1,27 +1,22 @@
-using MediatR;
-using Domain.SeedWork;
-using Domain.Common.Specifications;
 using Domain.Common.Extensions;
+using Domain.Common.Specifications;
+using Domain.SeedWork;
+using MediatR;
 
-namespace Application.UseCases.BaseAuditable.SoftDelete
+namespace Application.Commands.BaseAuditable.SoftDelete
 {
-    public abstract class GenericSoftDeleteHandler<TEntity, TCommand> : IRequestHandler<TCommand, bool>
+    public abstract class GenericSoftDeleteHandler<TEntity, TCommand>(
+        IRepository<TEntity> repository
+    ) : IRequestHandler<TCommand, bool>
          where TEntity : Entity, ISoftDeletable, IAggregateRoot
          where TCommand : GenericSoftDeleteCommand
     {
-        private readonly IRepository<TEntity> _repository;
-
-        protected GenericSoftDeleteHandler(IRepository<TEntity> repository)
-        {
-            _repository = repository;
-        }
-
         public async Task<bool> Handle(TCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var spec = new EntitiesByIdsSpecification<TEntity>(request.Ids, false);
-                var entities = await _repository.ListAsync(spec, cancellationToken);
+                var entities = await repository.ListAsync(spec, cancellationToken);
                 if (entities == null || entities.Count == 0)
                     throw new ApplicationException("Không tìm thấy bất kỳ bản ghi nào");
 
@@ -30,7 +25,7 @@ namespace Application.UseCases.BaseAuditable.SoftDelete
                     entity.MarkDeleted(request.UserId);
                 }
 
-                await _repository.UpdateRangeAsync(entities, cancellationToken);
+                await repository.UpdateRangeAsync(entities, cancellationToken);
                 return true;
             }
             catch (ApplicationException ex)
